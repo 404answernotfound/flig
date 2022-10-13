@@ -1,0 +1,12 @@
+{
+  "name": "flig",
+  "version": "1.0.0",
+  "description": "Flig (flow in git) is a CLI package to help you and your team work better with a simple git flow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": "src/index.js",
+  "author": "404answernotfound",
+  "license": "MIT"
+}
