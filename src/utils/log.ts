@@ -1,4 +1,5 @@
 import colors from 'colors';
+import colorfulfun from './colorful';
 
 export const log = {
   success: (msg: string) => console.log(colors.green(msg)),

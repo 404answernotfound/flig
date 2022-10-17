@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import { Command } from 'commander';
 import { TCommands } from '../types';
+import { log } from '../utils/log';
 export const show = new Command('show');
 
 const config: TCommands = {
@@ -26,7 +27,10 @@ const logs: TCommands = {
         console.error(err);
         return;
       }
-      console.table(stdout);
+      const _stdout = stdout.split('\n')
+      for(let line of _stdout){
+        log.random(line);
+      }
     });
   }
 };
