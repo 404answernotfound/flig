@@ -1,5 +1,8 @@
 import { Command } from 'commander';
+import { init } from './init';
+import { moveto } from './moveto';
 import { show } from './show';
+import { start } from './start';
 export const flig = new Command();
 
 flig
@@ -9,4 +12,8 @@ flig
   )
   .version('0.1.0');
 
+flig.addCommand(init);
 flig.addCommand(show);
+flig.addCommand(start);
+flig.addCommand(moveto);
+

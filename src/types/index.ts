@@ -2,7 +2,7 @@ export type TCommands = {
   title: string;
   description: string;
   args?: TArguments;
-  action: () => any;
+  action: (arg1?: any) => any;
   [key: string]: any;
 };
 

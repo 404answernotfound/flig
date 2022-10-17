@@ -5,10 +5,24 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon",
+    "dev": "npx ts-node ./src/index.ts",
+    "dev:watch": "nodemon",
     "start": "npx tsc src/index.ts",
     "build": "npx tsc ./src/index.ts && esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js"
   },
+  "engines": {
+    "node": ">=16.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/404answernotfound/flig.git"
+  },
+  "keywords": [
+    "cli",
+    "git",
+    "development",
+    "terminal"
+  ],
   "bin": {
     "flig": "dist/index.js"
   },

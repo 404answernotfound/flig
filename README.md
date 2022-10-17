@@ -34,6 +34,7 @@ flig # this should be magic and understand whatever git command you need
 flig help
 flig init # starts a git repository and asks whether you would like to change default configs like user.name and user.email, false by default
 flig start [branch name] # start new branch
+flig moveto [branch name] # checkout to branch
 flig add [single file, *] # stages changes
 flig save [[--withMaster [origin] branch name] # commits staged changes and if --withMaster is true, tries to merge latest master after committing
 flig sync [[origin] branch name] # pulls latest, if conflict tries to resolve, pushes. By default checkout master, pull latest, merge master into branch, pull latest from branch, push.
@@ -42,6 +43,8 @@ flig forward [number] # goes to next commit in the tree/branch, if exists. By de
 flig backward [number] # goes to previous commit in the tree/branch, if exists. By default number is 1 unless specified
 flig revert [--n number [--commit commit hash]] # git reset to HEAD^number or specific commit
 flig config # asks user.name and user.email to add to local .git/config file
+flig show config # full local config
+flig show logs # full logs --oneline (should also show which branches are @ pinpoint)
 ```
 
 

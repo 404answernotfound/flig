@@ -19,7 +19,6 @@ const _: TCommands = {
 };
 
 init.action(async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   await _.action();
 });
 

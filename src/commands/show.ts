@@ -28,8 +28,13 @@ const logs: TCommands = {
         return;
       }
       const _stdout = stdout.split('\n')
-      for(let line of _stdout){
-        log.random(line);
+      for(let line = 0; line < _stdout.length; line++){
+        if(line === 0){
+          log.first(_stdout[line])
+        }
+        else {
+          log.boring(_stdout[line])
+        }
       }
     });
   }
