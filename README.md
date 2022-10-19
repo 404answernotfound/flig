@@ -33,6 +33,7 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 flig # this should be magic and understand whatever git command you need
 flig help
 flig init # starts a git repository and asks whether you would like to change default configs like user.name and user.email, false by default
+flig init owner [--local [--global]] # this happens automatically if the first time you run flig you dont have global user configurations for user and email, otherwise you can use it to change the local owner of the repo or you can use it to change the global owner of the repo (this requires you to write something)
 flig start [branch name] # start new branch
 flig moveto [branch name] # checkout to branch
 flig add [single file, *] # stages changes
