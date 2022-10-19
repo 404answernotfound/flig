@@ -1,4 +1,6 @@
 import { Command } from 'commander';
+import { add } from './add';
+import { gotomain } from './gotomain';
 import { init } from './init';
 import { moveto } from './moveto';
 import { show } from './show';
@@ -16,4 +18,5 @@ flig.addCommand(init);
 flig.addCommand(show);
 flig.addCommand(start);
 flig.addCommand(moveto);
-
+flig.addCommand(gotomain);
+flig.addCommand(add);

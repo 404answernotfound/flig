@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import { exit } from 'process';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
+import inquirer from 'inquirer';
 export const start = new Command('start');
 
 const _: TCommands = {
