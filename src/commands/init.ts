@@ -8,12 +8,12 @@ const _: TCommands = {
   description: 'Initialize repository',
   action: () => {
     console.log('init command is running');
-    exec(`git init`, (err, stdout) => {
+    exec(`git init -q -b main`, (err, stdout) => {
       if (err) {
         console.error(err);
         return;
       }
-      console.log(stdout);
+      console.log('Congratulations! You created a `flig` repository. Which is really a git repository, since `flig` is a wrapper around it :)');
     });
   }
 };

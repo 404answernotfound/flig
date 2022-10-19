@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { flig } from './commands';
 import { log } from './utils/log'
 
