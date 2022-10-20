@@ -11,10 +11,13 @@ const _: TCommands = {
   action: (branchName: string) => {
     exec(`git checkout ${branchName}`, (err, stdout) => {
       if (err) {
-        console.error(err);
-        return;
+        log.error(
+          'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)'
+        );
       }
-      log.success(`Congratz! You are now on ${branchName} branch. This is your new pinpoint (HEAD)`);
+      log.success(
+        `Congratz! You are now on ${branchName} branch. This is your new pinpoint (HEAD)`
+      );
       exit(0);
     });
   }

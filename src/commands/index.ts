@@ -3,8 +3,10 @@ import { add } from './add';
 import { gotomain } from './gotomain';
 import { init } from './init';
 import { moveto } from './moveto';
+import { own } from './own';
 import { show } from './show';
 import { start } from './start';
+import { status } from './status';
 export const flig = new Command();
 
 flig
@@ -20,3 +22,5 @@ flig.addCommand(start);
 flig.addCommand(moveto);
 flig.addCommand(gotomain);
 flig.addCommand(add);
+flig.addCommand(own);
+flig.addCommand(status);

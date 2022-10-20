@@ -2,7 +2,7 @@ import colors from 'colors';
 
 export const log = {
   success: (msg: string) => console.log(colors.green(msg)),
-  info: (msg: string) => console.log(colors.blue(msg)),
+  info: (msg: string) => console.log(colors.bgBlue(msg)),
   warning: (msg: string) => console.log(colors.yellow(msg)),
   error: (msg: string) => console.log(colors.red(msg)),
   rainbow: (msg: string) => console.log(colors.rainbow(msg)),

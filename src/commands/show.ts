@@ -10,10 +10,9 @@ const config: TCommands = {
   action: () => {
     exec(`git config -l`, (err, stdout) => {
       if (err) {
-        console.error(err);
-        return;
+        log.error('Seems like this is not a git repository at this time. Are you sure you are in the right place? :)')
       }
-      console.log(stdout);
+      log.success(stdout);
     });
   }
 };
@@ -24,8 +23,7 @@ const logs: TCommands = {
   action: () => {
     exec(`git log --oneline`, (err, stdout) => {
       if (err) {
-        console.error(err);
-        return;
+        log.error('Seems like this is not a git repository at this time. Are you sure you are in the right place? :)')
       }
       const _stdout = stdout.split('\n')
       for(let line = 0; line < _stdout.length; line++){

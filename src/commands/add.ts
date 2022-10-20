@@ -11,11 +11,12 @@ const _: TCommands = {
   action: (items: string[]) => {
     exec(`git add * .*`, (err, stdout) => {
       if (err) {
-        console.error(err);
-        return;
+        log.error(
+          'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)'
+        );
       }
       log.success(`Congratz! You added: \n\n`);
-      for(let item of items){
+      for (let item of items) {
         log.boring(item);
       }
       exit(0);

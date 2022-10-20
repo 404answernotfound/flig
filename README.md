@@ -25,6 +25,8 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 
 ## Future plans
 
+- [ ] Write better errors for flig outside of git repositories
+- [ ] Add new option to have more descriptive errors on stdout (--show-error)
 - [ ] Explanation of each command to learn `git` (`flig` behind the curtains)
 - [ ] Interactive tutorial to learn `flig`
 - [ ] Interactive tutorial to learn `git` as used by `flig`
