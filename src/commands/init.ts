@@ -4,28 +4,34 @@ import { TCommands } from '../types';
 import { log } from '../utils/log';
 export const init = new Command('init');
 
+const phrases = {
+  error:
+    'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)',
+  success:
+    'Congratulations! You created a `flig` repository. Which is really a git repository, since `flig` is a wrapper around it :)',
+  explanation: `1) git init -q -b main\nThe "init" command in git initialized a repository. Flig uses the flag "-q" to avoid stdout questions on the user and "-b" to create a new branch with the name main.`
+};
+
 const _: TCommands = {
   title: 'init',
   description: 'Initialize repository',
   action: (options) => {
     exec(`git init -q -b main`, (err, _) => {
       if (err) {
-        log.error(
-          'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)'
-        );
+        log.error(phrases.error);
       }
-      log.success(
-        'Congratulations! You created a `flig` repository. Which is really a git repository, since `flig` is a wrapper around it :)'
-      );
+      log.success(phrases.success);
       if (options.explain) {
-        log.info(
-          `1) git init -q -b main\n The "init" command in git initialized a repository. Flig uses the flag "-q" to avoid stdout questions on the user and "-b" to create a new branch with the name main.`
-        );
+        log.info(phrases.explanation);
       }
     });
   }
 };
 
-init.addOption(new Option('-e, --explain')).action(async (options) => {
-  await _.action(options);
-});
+init
+  .addOption(
+    new Option('-e, --explain', 'to read git commands and explanation')
+  )
+  .action(async (options) => {
+    await _.action(options);
+  });

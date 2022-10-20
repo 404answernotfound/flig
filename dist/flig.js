@@ -31850,7 +31850,6 @@ var {
 
 // src/commands/add.ts
 var import_child_process = require("child_process");
-var import_process = require("process");
 
 // src/utils/log.ts
 var import_colors = __toESM(require_lib());
@@ -31866,33 +31865,46 @@ var log = {
 
 // src/commands/add.ts
 var add = new Command("add");
+var phrases = {
+  error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
+  explanation: `1) git config --local user.name '<username>'
+2) git config --local user.email '<email>'
+
+This is the command that we are using behind the curtain to create a new local owner of the repository. This is the name and email that you are going to see on the origin's repository whenever you push something to it (or sync, in flig terms)`
+};
 var _ = {
   title: "add",
   description: "Add files to branch",
-  action: (items) => {
-    (0, import_child_process.exec)(`git add * .*`, (err, stdout) => {
+  action: (items, options) => {
+    (0, import_child_process.exec)(`git add *`, (err, _8) => {
       if (err) {
-        log.error(
-          "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
-        );
+        log.error(phrases.error);
+        if (options.error) {
+          log.error(err.toString());
+        }
       }
       log.success(`Congratz! You added: 
 
 `);
-      for (let item of items) {
-        log.boring(item);
+      for (let item in items) {
+        log.boring(`+${item}
+`);
       }
-      (0, import_process.exit)(0);
+      if (options.explain) {
+        log.info(phrases.explanation);
+      }
     });
   }
 };
-add.argument("<string>", "name of the branch").action(async (branchName) => {
-  await _.action(branchName);
+add.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).addOption(new Option("--error", "to read git error")).action(async (items, options) => {
+  await _.action(items, options);
 });
 
 // src/commands/gotomain.ts
 var import_child_process2 = require("child_process");
-var import_process2 = require("process");
+var import_process = require("process");
 var gotomain = new Command("gotomain");
 var _2 = {
   title: "gotomain",
@@ -31900,7 +31912,7 @@ var _2 = {
   action: () => {
     (0, import_child_process2.exec)(
       `cat .git/config | grep -oE -m 1 "main|master" | xargs -I {} bash -c 'git checkout {}'`,
-      (err, stdout) => {
+      (err, _8) => {
         if (err) {
           log.error(
             "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
@@ -31909,7 +31921,7 @@ var _2 = {
         log.success(
           `Congratz! You are now on main branch. This is your new pinpoint (HEAD)`
         );
-        (0, import_process2.exit)(0);
+        (0, import_process.exit)(0);
       }
     );
   }
@@ -31921,55 +31933,63 @@ gotomain.action(async () => {
 // src/commands/init.ts
 var import_child_process3 = require("child_process");
 var init = new Command("init");
+var phrases2 = {
+  error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
+  success: "Congratulations! You created a `flig` repository. Which is really a git repository, since `flig` is a wrapper around it :)",
+  explanation: `1) git init -q -b main
+The "init" command in git initialized a repository. Flig uses the flag "-q" to avoid stdout questions on the user and "-b" to create a new branch with the name main.`
+};
 var _3 = {
   title: "init",
   description: "Initialize repository",
   action: (options) => {
     (0, import_child_process3.exec)(`git init -q -b main`, (err, _8) => {
       if (err) {
-        log.error(
-          "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
-        );
+        log.error(phrases2.error);
       }
-      log.success(
-        "Congratulations! You created a `flig` repository. Which is really a git repository, since `flig` is a wrapper around it :)"
-      );
+      log.success(phrases2.success);
       if (options.explain) {
-        log.info(
-          `1) git init -q -b main
- The "init" command in git initialized a repository. Flig uses the flag "-q" to avoid stdout questions on the user and "-b" to create a new branch with the name main.`
-        );
+        log.info(phrases2.explanation);
       }
     });
   }
 };
-init.addOption(new Option("-e, --explain")).action(async (options) => {
+init.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).action(async (options) => {
   await _3.action(options);
 });
 
 // src/commands/moveto.ts
 var import_child_process4 = require("child_process");
-var import_process3 = require("process");
 var moveto = new Command("moveto");
+var phrases3 = {
+  error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
+  explanation: `1) git checkout <branch name>'
+Without any flags (like -b) git checkout switches between branches (pinpoints, in flig terms).
+It's like having a cool space and time machine.`
+};
 var _4 = {
   title: "moveto",
   description: "Move to branch",
-  action: (branchName) => {
+  action: (branchName, options) => {
     (0, import_child_process4.exec)(`git checkout ${branchName}`, (err, stdout) => {
       if (err) {
-        log.error(
-          "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
-        );
+        log.error(phrases3.error);
       }
       log.success(
         `Congratz! You are now on ${branchName} branch. This is your new pinpoint (HEAD)`
       );
-      (0, import_process3.exit)(0);
+      if (options.explain) {
+        log.info(phrases3.explanation);
+      }
     });
   }
 };
-moveto.argument("<string>", "name of the branch").action(async (branchName) => {
-  await _4.action(branchName);
+moveto.argument("<string>", "name of the branch").addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).action(async (branchName, options) => {
+  await _4.action(branchName, options);
 });
 
 // src/commands/own.ts
@@ -32018,7 +32038,7 @@ var localOwner = [
 
 // src/commands/own.ts
 var own = new Command("own");
-var phrases = {
+var phrases4 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   success: "Nice job! You just changed the user of the repository (locally!)",
   explanation: `1) git config --local user.name '<username>'
@@ -32035,43 +32055,59 @@ var _5 = {
         `git config --local user.name '${answer.name}' && git config --local user.email '${answer.email}'`,
         (err, _8) => {
           if (err) {
-            log.error(phrases.error);
+            log.error(phrases4.error);
           }
-          log.success(phrases.success);
+          log.success(phrases4.success);
           if (options.explain) {
-            log.info(phrases.explanation);
+            log.info(phrases4.explanation);
           }
         }
       );
     });
   }
 };
-own.addOption(new Option("-e, --explain")).action(async (options) => {
+own.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).action(async (options) => {
   await _5.action(options);
 });
 
 // src/commands/show.ts
 var import_child_process6 = require("child_process");
 var show = new Command("show");
+var phrases5 = {
+  error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
+  explanation1: `1) git config -l
+Show local configuration of current repository.`,
+  explanation2: `1) git logs --oneline
+Show logs in oneline fashion for current git repository`
+};
 var config = {
   title: "config",
   description: "Shows local configuration",
-  action: () => {
+  action: (options) => {
     (0, import_child_process6.exec)(`git config -l`, (err, stdout) => {
       if (err) {
-        log.error("Seems like this is not a git repository at this time. Are you sure you are in the right place? :)");
+        log.error(
+          "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
+        );
       }
       log.success(stdout);
+      if (options.explain) {
+        log.info(phrases5.explanation1);
+      }
     });
   }
 };
 var logs = {
   title: "logs",
   description: "Shows logs",
-  action: () => {
+  action: (options) => {
     (0, import_child_process6.exec)(`git log --oneline`, (err, stdout) => {
       if (err) {
-        log.error("Seems like this is not a git repository at this time. Are you sure you are in the right place? :)");
+        log.error(
+          "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
+        );
       }
       const _stdout = stdout.split("\n");
       for (let line = 0; line < _stdout.length; line++) {
@@ -32081,24 +32117,32 @@ var logs = {
           log.boring(_stdout[line]);
         }
       }
+      if (options.explain) {
+        log.info(phrases5.explanation2);
+      }
     });
   }
 };
-show.command(config.title).action(async () => {
-  await config.action();
+show.command(config.title).addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).action(async (options) => {
+  await config.action(options);
 });
-show.command(logs.title).action(async () => {
-  await logs.action();
+show.command(logs.title).addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).action(async (options) => {
+  await logs.action(options);
 });
 
 // src/commands/start.ts
 var import_child_process7 = require("child_process");
 var import_inquirer2 = __toESM(require_inquirer());
 var start = new Command("start");
-var phrases2 = {
+var phrases6 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   explanation: `1) git checkout -b [<branch type>--]<branch name>
-Following flig rules, we name our branches with type and name, united with a double dash. The checkout command either creates (with -b flag) or changes to, another branch!`
+Following flig rules, we name our branches with type and name, united with a double dash.
+The checkout command either creates (with -b flag) or changes to, another branch!`
 };
 var _6 = {
   title: "start",
@@ -32109,27 +32153,29 @@ var _6 = {
         `git checkout -b ${answer.branchType}--${answer.branchName}`,
         (err, _8) => {
           if (err) {
-            log.error(phrases2.error);
+            log.error(phrases6.error);
           }
           log.success(
             `Branch ${answer.branchType}--${answer.branchName} was successfully created and your project pinpoint (HEAD) has moved to it`
           );
           if (options.explain) {
-            log.info(phrases2.explanation);
+            log.info(phrases6.explanation);
           }
         }
       );
     });
   }
 };
-start.addOption(new Option("-e, --explain")).action(async (options) => {
+start.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).action(async (options) => {
   await _6.action(options);
 });
 
 // src/commands/status.ts
 var import_child_process8 = require("child_process");
 var status = new Command("status");
-var phrases3 = {
+var phrases7 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   explanation: `1) git status
  The "status" command in git is useful to check if there are any files that were not added to the staging area or committed, among many other things (like deleted files and folders!).`
@@ -32140,16 +32186,18 @@ var _7 = {
   action: (options) => {
     (0, import_child_process8.exec)(`git status`, (err, stdout) => {
       if (err) {
-        log.error(phrases3.error);
+        log.error(phrases7.error);
       }
       log.boring(stdout);
       if (options.explain) {
-        log.info(phrases3.explanation);
+        log.info(phrases7.explanation);
       }
     });
   }
 };
-status.addOption(new Option("-e, --explain")).action(async (options) => {
+status.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).action(async (options) => {
   await _7.action(options);
 });
 

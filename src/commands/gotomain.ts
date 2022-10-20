@@ -11,7 +11,7 @@ const _: TCommands = {
   action: () => {
     exec(
       `cat .git/config | grep -oE -m 1 "main|master" | xargs -I {} bash -c 'git checkout {}'`,
-      (err, stdout) => {
+      (err, _) => {
         if (err) {
           log.error(
             'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)'

@@ -16,7 +16,7 @@ const _: TCommands = {
   action: (options) => {
     exec(`git status`, (err, stdout) => {
       if (err) {
-        log.error(phrases.error)
+        log.error(phrases.error);
       }
       log.boring(stdout);
       if (options.explain) {
@@ -26,7 +26,10 @@ const _: TCommands = {
   }
 };
 
-status.addOption(new Option('-e, --explain')).action(async (options) => {
-  await _.action(options);
-});
-
+status
+  .addOption(
+    new Option('-e, --explain', 'to read git commands and explanation')
+  )
+  .action(async (options) => {
+    await _.action(options);
+  });

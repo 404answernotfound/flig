@@ -38,6 +38,10 @@ const _: TCommands = {
   }
 };
 
-start.addOption(new Option('-e, --explain')).action(async (options) => {
-  await _.action(options);
-});
+start
+  .addOption(
+    new Option('-e, --explain', 'to read git commands and explanation')
+  )
+  .action(async (options) => {
+    await _.action(options);
+  });
