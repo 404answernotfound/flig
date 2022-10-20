@@ -25,7 +25,10 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 
 ## Future plans
 
-- Configurable git flow (the magic behind the command `flig`)
+- [] Explanation of each command to learn `git` (`flig` behind the curtains)
+- [] Interactive tutorial to learn `flig`
+- [] Interactive tutorial to learn `git` as used by `flig`
+- [] Configurable git flow (the magic behind the command `flig`)
 
 ## Usage/Examples
 

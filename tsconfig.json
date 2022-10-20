@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "CommonJS",
     "moduleResolution": "node",
     "lib": [
@@ -19,5 +20,5 @@
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
-  ]
+  ],
 }
