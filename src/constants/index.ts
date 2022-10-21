@@ -37,3 +37,11 @@ export const localOwner = [
         message: 'Let\'s also add an email (Github is kinda peaky about this!)',
     },
 ];
+
+export const saveQuestion = [
+    {
+        type: 'input',
+        name: 'commit',
+        message: 'A good commit requires a good message. Let\'s add one. What did you do? Try to describe it in less than 10 words!',
+    },
+];

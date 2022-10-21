@@ -4105,7 +4105,7 @@ var require_figures = __commonJS({
     "use strict";
     var escapeStringRegexp = require_escape_string_regexp();
     var { platform } = process;
-    var main2 = {
+    var main3 = {
       tick: "\u2714",
       cross: "\u2716",
       star: "\u2605",
@@ -4191,12 +4191,12 @@ var require_figures = __commonJS({
       hamburger: "\u2261",
       smiley: "\u263A",
       mustache: "\u250C\u2500\u2510",
-      heart: main2.heart,
+      heart: main3.heart,
       nodejs: "\u2666",
-      arrowUp: main2.arrowUp,
-      arrowDown: main2.arrowDown,
-      arrowLeft: main2.arrowLeft,
-      arrowRight: main2.arrowRight,
+      arrowUp: main3.arrowUp,
+      arrowDown: main3.arrowDown,
+      arrowLeft: main3.arrowLeft,
+      arrowRight: main3.arrowRight,
       radioOn: "(*)",
       radioOff: "( )",
       checkboxOn: "[\xD7]",
@@ -4224,14 +4224,14 @@ var require_figures = __commonJS({
       sevenEighths: "7/8"
     };
     if (platform === "linux") {
-      main2.questionMarkPrefix = "?";
+      main3.questionMarkPrefix = "?";
     }
-    var figures = platform === "win32" ? windows : main2;
+    var figures = platform === "win32" ? windows : main3;
     var fn = (string) => {
-      if (figures === main2) {
+      if (figures === main3) {
         return string;
       }
-      for (const [key, value] of Object.entries(main2)) {
+      for (const [key, value] of Object.entries(main3)) {
         if (value === figures[key]) {
           continue;
         }
@@ -4240,7 +4240,7 @@ var require_figures = __commonJS({
       return string;
     };
     module2.exports = Object.assign(fn, figures);
-    module2.exports.main = main2;
+    module2.exports.main = main3;
     module2.exports.windows = windows;
   }
 });
@@ -6880,7 +6880,7 @@ var require_mute = __commonJS({
 var require_baseUI = __commonJS({
   "node_modules/inquirer/lib/ui/baseUI.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       extend: require_extend(),
       omit: require_omit()
     };
@@ -6927,13 +6927,13 @@ var require_baseUI = __commonJS({
       var ms = new MuteStream();
       ms.pipe(opt.output || process.stdout);
       var output = ms;
-      return _8.extend(
+      return _9.extend(
         {
           terminal: true,
           input,
           output
         },
-        _8.omit(opt, ["input", "output"])
+        _9.omit(opt, ["input", "output"])
       );
     }
     module2.exports = UI;
@@ -7091,7 +7091,7 @@ var require_bottom_bar = __commonJS({
     var through = require_through();
     var Base = require_baseUI();
     var rlUtils = require_readline();
-    var _8 = {
+    var _9 = {
       last: require_last()
     };
     var BottomBar = class extends Base {
@@ -7133,7 +7133,7 @@ var require_bottom_bar = __commonJS({
       write(message) {
         var msgLines = message.split(/\n/);
         this.height = msgLines.length;
-        this.rl.setPrompt(_8.last(msgLines));
+        this.rl.setPrompt(_9.last(msgLines));
         if (this.rl.output.rows === 0 && this.rl.output.columns === 0) {
           rlUtils.left(this.rl, message.length + this.rl.line.length);
         }
@@ -19180,13 +19180,13 @@ var require_run_async = __commonJS({
 var require_utils = __commonJS({
   "node_modules/inquirer/lib/utils/utils.js"(exports) {
     "use strict";
-    var _8 = {
+    var _9 = {
       isFunction: require_isFunction()
     };
     var { from, of } = require_rxjs();
     var runAsync = require_run_async();
     exports.fetchAsyncQuestionProperty = function(question, prop, answers) {
-      if (!_8.isFunction(question[prop])) {
+      if (!_9.isFunction(question[prop])) {
         return of(question);
       }
       return from(
@@ -19203,7 +19203,7 @@ var require_utils = __commonJS({
 var require_prompt = __commonJS({
   "node_modules/inquirer/lib/ui/prompt.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       isPlainObject: require_isPlainObject(),
       clone: require_clone(),
       isArray: require_isArray(),
@@ -19221,15 +19221,15 @@ var require_prompt = __commonJS({
         this.prompts = prompts;
       }
       run(questions, answers) {
-        if (_8.isPlainObject(answers)) {
-          this.answers = _8.clone(answers);
+        if (_9.isPlainObject(answers)) {
+          this.answers = _9.clone(answers);
         } else {
           this.answers = {};
         }
-        if (_8.isPlainObject(questions)) {
+        if (_9.isPlainObject(questions)) {
           questions = [questions];
         }
-        var obs = _8.isArray(questions) ? from(questions) : questions;
+        var obs = _9.isArray(questions) ? from(questions) : questions;
         this.process = obs.pipe(
           concatMap(this.processQuestion.bind(this)),
           publish()
@@ -19237,7 +19237,7 @@ var require_prompt = __commonJS({
         this.process.connect();
         return this.process.pipe(
           reduce((answers2, answer) => {
-            _8.set(answers2, answer.name, answer.answer);
+            _9.set(answers2, answer.name, answer.answer);
             return answers2;
           }, this.answers)
         ).toPromise(Promise).then(this.onCompletion.bind(this), this.onError.bind(this));
@@ -19251,7 +19251,7 @@ var require_prompt = __commonJS({
         return Promise.reject(error);
       }
       processQuestion(question) {
-        question = _8.clone(question);
+        question = _9.clone(question);
         return defer(() => {
           var obs = of(question);
           return obs.pipe(
@@ -19292,7 +19292,7 @@ var require_prompt = __commonJS({
         if (question.when === false) {
           return empty();
         }
-        if (!_8.isFunction(question.when)) {
+        if (!_9.isFunction(question.when)) {
           return of(question);
         }
         var answers = this.answers;
@@ -20601,7 +20601,7 @@ var require_find2 = __commonJS({
 var require_choice = __commonJS({
   "node_modules/inquirer/lib/objects/choice.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       isString: require_isString(),
       isNumber: require_isNumber(),
       extend: require_extend(),
@@ -20612,18 +20612,18 @@ var require_choice = __commonJS({
         if (val instanceof Choice || val.type === "separator") {
           return val;
         }
-        if (_8.isString(val) || _8.isNumber(val)) {
+        if (_9.isString(val) || _9.isNumber(val)) {
           this.name = String(val);
           this.value = val;
           this.short = String(val);
         } else {
-          _8.extend(this, val, {
+          _9.extend(this, val, {
             name: val.name || val.value,
             value: "value" in val ? val.value : val.name,
             short: val.short || val.name || val.value
           });
         }
-        if (_8.isFunction(val.disabled)) {
+        if (_9.isFunction(val.disabled)) {
           this.disabled = val.disabled(answers);
         } else {
           this.disabled = val.disabled;
@@ -20638,7 +20638,7 @@ var require_choices = __commonJS({
   "node_modules/inquirer/lib/objects/choices.js"(exports, module2) {
     "use strict";
     var assert = require("assert");
-    var _8 = {
+    var _9 = {
       isNumber: require_isNumber(),
       filter: require_filter2(),
       map: require_map2(),
@@ -20676,18 +20676,18 @@ var require_choices = __commonJS({
         });
       }
       getChoice(selector) {
-        assert(_8.isNumber(selector));
+        assert(_9.isNumber(selector));
         return this.realChoices[selector];
       }
       get(selector) {
-        assert(_8.isNumber(selector));
+        assert(_9.isNumber(selector));
         return this.choices[selector];
       }
       where(whereClause) {
-        return _8.filter(this.realChoices, whereClause);
+        return _9.filter(this.realChoices, whereClause);
       }
       pluck(propertyName) {
-        return _8.map(this.realChoices, propertyName);
+        return _9.map(this.realChoices, propertyName);
       }
       indexOf() {
         return this.choices.indexOf.apply(this.choices, arguments);
@@ -20702,10 +20702,10 @@ var require_choices = __commonJS({
         return this.choices.reduce.apply(this.choices, arguments);
       }
       find(func) {
-        return _8.find(this.choices, func);
+        return _9.find(this.choices, func);
       }
       push() {
-        var objs = _8.map(arguments, (val) => new Choice(val));
+        var objs = _9.map(arguments, (val) => new Choice(val));
         this.choices.push.apply(this.choices, objs);
         this.realChoices = this.choices.filter(Separator.exclude).filter((item) => !item.disabled);
         return this.choices;
@@ -20849,7 +20849,7 @@ var require_string_width = __commonJS({
 var require_screen_manager = __commonJS({
   "node_modules/inquirer/lib/utils/screen-manager.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       last: require_last(),
       flatten: require_flatten()
     };
@@ -20861,7 +20861,7 @@ var require_screen_manager = __commonJS({
       return content.split("\n").length;
     }
     function lastLine(content) {
-      return _8.last(content.split("\n"));
+      return _9.last(content.split("\n"));
     }
     var ScreenManager = class {
       constructor(rl) {
@@ -20937,7 +20937,7 @@ var require_screen_manager = __commonJS({
       }
       forceLineReturn(content, width) {
         width = width || this.normalizedCliWidth();
-        return _8.flatten(this.breakLines(content.split("\n"), width)).join("\n");
+        return _9.flatten(this.breakLines(content.split("\n"), width)).join("\n");
       }
     };
     module2.exports = ScreenManager;
@@ -20948,7 +20948,7 @@ var require_screen_manager = __commonJS({
 var require_base = __commonJS({
   "node_modules/inquirer/lib/prompts/base.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       assign: require_assign(),
       defaults: require_defaults(),
       clone: require_clone()
@@ -20960,11 +20960,11 @@ var require_base = __commonJS({
     var ScreenManager = require_screen_manager();
     var Prompt = class {
       constructor(question, rl, answers) {
-        _8.assign(this, {
+        _9.assign(this, {
           answers,
           status: "pending"
         });
-        this.opt = _8.defaults(_8.clone(question), {
+        this.opt = _9.defaults(_9.clone(question), {
           validate: () => true,
           filter: (val) => val,
           when: () => true,
@@ -21126,7 +21126,7 @@ var require_sum = __commonJS({
 var require_paginator = __commonJS({
   "node_modules/inquirer/lib/utils/paginator.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       sum: require_sum(),
       flatten: require_flatten()
     };
@@ -21143,8 +21143,8 @@ var require_paginator = __commonJS({
         var lines = output.split("\n");
         if (this.screen) {
           lines = this.screen.breakLines(lines);
-          active = _8.sum(lines.map((lineParts) => lineParts.length).splice(0, active));
-          lines = _8.flatten(lines);
+          active = _9.sum(lines.map((lineParts) => lineParts.length).splice(0, active));
+          lines = _9.flatten(lines);
         }
         if (lines.length <= pageSize) {
           return output;
@@ -21161,7 +21161,7 @@ var require_paginator = __commonJS({
         if (this.pointer < middleOfList && this.lastIndex < active && active - this.lastIndex < pageSize) {
           this.pointer = Math.min(middleOfList, this.pointer + active - this.lastIndex);
         }
-        var infinite = _8.flatten([lines, lines, lines]);
+        var infinite = _9.flatten([lines, lines, lines]);
         var topIndex = Math.max(0, active + lines.length - this.pointer);
         return infinite.splice(topIndex, pageSize);
       }
@@ -21207,7 +21207,7 @@ var require_incrementListIndex = __commonJS({
 var require_list = __commonJS({
   "node_modules/inquirer/lib/prompts/list.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       isNumber: require_isNumber(),
       findIndex: require_findIndex2(),
       isString: require_isString()
@@ -21230,10 +21230,10 @@ var require_list = __commonJS({
         this.firstRender = true;
         this.selected = 0;
         var def = this.opt.default;
-        if (_8.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
+        if (_9.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
           this.selected = def;
-        } else if (!_8.isNumber(def) && def != null) {
-          let index = _8.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
+        } else if (!_9.isNumber(def) && def != null) {
+          let index = _9.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
           this.selected = Math.max(index, 0);
         }
         this.opt.default = null;
@@ -21324,7 +21324,7 @@ var require_list = __commonJS({
         if (choice.disabled) {
           separatorOffset++;
           output += "  - " + choice.name;
-          output += " (" + (_8.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
+          output += " (" + (_9.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
           output += "\n";
           return;
         }
@@ -21449,7 +21449,7 @@ var require_isBoolean = __commonJS({
 var require_confirm = __commonJS({
   "node_modules/inquirer/lib/prompts/confirm.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       extend: require_extend(),
       isBoolean: require_isBoolean()
     };
@@ -21461,7 +21461,7 @@ var require_confirm = __commonJS({
       constructor(questions, rl, answers) {
         super(questions, rl, answers);
         var rawDefault = true;
-        _8.extend(this.opt, {
+        _9.extend(this.opt, {
           filter: function(input) {
             var value = rawDefault;
             if (input != null && input !== "") {
@@ -21470,7 +21470,7 @@ var require_confirm = __commonJS({
             return value;
           }
         });
-        if (_8.isBoolean(this.opt.default)) {
+        if (_9.isBoolean(this.opt.default)) {
           rawDefault = this.opt.default;
         }
         this.opt.default = rawDefault ? "Y/n" : "y/N";
@@ -21512,7 +21512,7 @@ var require_confirm = __commonJS({
 var require_rawlist = __commonJS({
   "node_modules/inquirer/lib/prompts/rawlist.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       extend: require_extend(),
       isNumber: require_isNumber(),
       findIndex: require_findIndex2()
@@ -21533,17 +21533,17 @@ var require_rawlist = __commonJS({
         this.opt.validChoices = this.opt.choices.filter(Separator.exclude);
         this.selected = 0;
         this.rawDefault = 0;
-        _8.extend(this.opt, {
+        _9.extend(this.opt, {
           validate: function(val) {
             return val != null;
           }
         });
         var def = this.opt.default;
-        if (_8.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
+        if (_9.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
           this.selected = def;
           this.rawDefault = def;
-        } else if (!_8.isNumber(def) && def != null) {
-          let index = _8.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
+        } else if (!_9.isNumber(def) && def != null) {
+          let index = _9.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
           let safeIndex = Math.max(index, 0);
           this.selected = safeIndex;
           this.rawDefault = safeIndex;
@@ -21804,7 +21804,7 @@ var require_uniq = __commonJS({
 var require_expand2 = __commonJS({
   "node_modules/inquirer/lib/prompts/expand.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       uniq: require_uniq(),
       isString: require_isString(),
       isNumber: require_isNumber(),
@@ -21946,16 +21946,16 @@ var require_expand2 = __commonJS({
         }
         if (errors.length) {
           throw new Error(
-            "Duplicate key error: `key` param must be unique. Duplicates: " + _8.uniq(errors).join(", ")
+            "Duplicate key error: `key` param must be unique. Duplicates: " + _9.uniq(errors).join(", ")
           );
         }
       }
       generateChoicesString(choices, defaultChoice) {
         var defIndex = choices.realLength - 1;
-        if (_8.isNumber(defaultChoice) && this.opt.choices.getChoice(defaultChoice)) {
+        if (_9.isNumber(defaultChoice) && this.opt.choices.getChoice(defaultChoice)) {
           defIndex = defaultChoice;
-        } else if (_8.isString(defaultChoice)) {
-          let index = _8.findIndex(
+        } else if (_9.isString(defaultChoice)) {
+          let index = _9.findIndex(
             choices.realChoices,
             ({ value }) => value === defaultChoice
           );
@@ -21991,7 +21991,7 @@ var require_expand2 = __commonJS({
 var require_checkbox = __commonJS({
   "node_modules/inquirer/lib/prompts/checkbox.js"(exports, module2) {
     "use strict";
-    var _8 = {
+    var _9 = {
       isArray: require_isArray(),
       map: require_map2(),
       isString: require_isString()
@@ -22010,7 +22010,7 @@ var require_checkbox = __commonJS({
         if (!this.opt.choices) {
           this.throwParamError("choices");
         }
-        if (_8.isArray(this.opt.default)) {
+        if (_9.isArray(this.opt.default)) {
           this.opt.choices.forEach(function(choice) {
             if (this.opt.default.indexOf(choice.value) >= 0) {
               choice.checked = true;
@@ -22090,8 +22090,8 @@ var require_checkbox = __commonJS({
         var choices = this.opt.choices.filter(function(choice) {
           return Boolean(choice.checked) && !choice.disabled;
         });
-        this.selection = _8.map(choices, "short");
-        return _8.map(choices, "value");
+        this.selection = _9.map(choices, "short");
+        return _9.map(choices, "value");
       }
       onUpKey() {
         this.pointer = incrementListIndex(this.pointer, "up", this.opt);
@@ -22153,7 +22153,7 @@ var require_checkbox = __commonJS({
         if (choice.disabled) {
           separatorOffset++;
           output += " - " + choice.name;
-          output += " (" + (_8.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
+          output += " (" + (_9.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
         } else {
           var line = getCheckbox(choice.checked) + " " + choice.name;
           if (i - separatorOffset === pointer) {
@@ -31784,18 +31784,18 @@ var require_editor = __commonJS({
 var require_inquirer = __commonJS({
   "node_modules/inquirer/lib/inquirer.js"(exports, module2) {
     "use strict";
-    var inquirer3 = module2.exports;
-    inquirer3.prompts = {};
-    inquirer3.Separator = require_separator();
-    inquirer3.ui = {
+    var inquirer4 = module2.exports;
+    inquirer4.prompts = {};
+    inquirer4.Separator = require_separator();
+    inquirer4.ui = {
       BottomBar: require_bottom_bar(),
       Prompt: require_prompt()
     };
-    inquirer3.createPromptModule = function(opt) {
+    inquirer4.createPromptModule = function(opt) {
       var promptModule = function(questions, answers) {
         var ui;
         try {
-          ui = new inquirer3.ui.Prompt(promptModule.prompts, opt);
+          ui = new inquirer4.ui.Prompt(promptModule.prompts, opt);
         } catch (error) {
           return Promise.reject(error);
         }
@@ -31822,12 +31822,12 @@ var require_inquirer = __commonJS({
       promptModule.restoreDefaultPrompts();
       return promptModule;
     };
-    inquirer3.prompt = inquirer3.createPromptModule();
-    inquirer3.registerPrompt = function(name, prompt) {
-      inquirer3.prompt.registerPrompt(name, prompt);
+    inquirer4.prompt = inquirer4.createPromptModule();
+    inquirer4.registerPrompt = function(name, prompt) {
+      inquirer4.prompt.registerPrompt(name, prompt);
     };
-    inquirer3.restoreDefaultPrompts = function() {
-      inquirer3.prompt.restoreDefaultPrompts();
+    inquirer4.restoreDefaultPrompts = function() {
+      inquirer4.prompt.restoreDefaultPrompts();
     };
   }
 });
@@ -31850,6 +31850,7 @@ var {
 
 // src/commands/add.ts
 var import_child_process = require("child_process");
+var import_process = require("process");
 
 // src/utils/log.ts
 var import_colors = __toESM(require_lib());
@@ -31867,6 +31868,7 @@ var log = {
 var add = new Command("add");
 var phrases = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
+  success: `Congratz! You added all the files and non empty folders to the staging area :)`,
   explanation: `1) git config --local user.name '<username>'
 2) git config --local user.email '<email>'
 
@@ -31875,65 +31877,63 @@ This is the command that we are using behind the curtain to create a new local o
 var _ = {
   title: "add",
   description: "Add files to branch",
-  action: (items, options) => {
-    (0, import_child_process.exec)(`git add *`, (err, _8) => {
+  action: (options) => {
+    (0, import_child_process.exec)(`git add *`, (err, _9) => {
       if (err) {
         log.error(phrases.error);
         if (options.error) {
           log.error(err.toString());
         }
       }
-      log.success(`Congratz! You added: 
-
-`);
-      for (let item in items) {
-        log.boring(`+${item}
-`);
-      }
+      log.success(phrases.success);
       if (options.explain) {
         log.info(phrases.explanation);
       }
+      (0, import_process.exit)(0);
     });
   }
 };
 add.addOption(
   new Option("-e, --explain", "to read git commands and explanation")
-).addOption(new Option("--error", "to read git error")).action(async (items, options) => {
-  await _.action(items, options);
+).addOption(new Option("--error", "to read git error")).action(async (options) => {
+  await _.action(options);
 });
 
-// src/commands/gotomain.ts
+// src/commands/main.ts
 var import_child_process2 = require("child_process");
-var import_process = require("process");
-var gotomain = new Command("gotomain");
+var import_process2 = require("process");
+var main = new Command("main");
+var phrases2 = {
+  error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
+  success: `Congratz! You are now on main branch. This is your new pinpoint (HEAD)`,
+  explanation: `1) git init -q -b main
+The "init" command in git initialized a repository. Flig uses the flag "-q" to avoid stdout questions on the user and "-b" to create a new branch with the name main.`
+};
 var _2 = {
-  title: "gotomain",
+  title: "main",
   description: "Move to branch",
   action: () => {
     (0, import_child_process2.exec)(
       `cat .git/config | grep -oE -m 1 "main|master" | xargs -I {} bash -c 'git checkout {}'`,
-      (err, _8) => {
+      (err, _9) => {
         if (err) {
-          log.error(
-            "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
-          );
+          log.error(phrases2.error);
         }
-        log.success(
-          `Congratz! You are now on main branch. This is your new pinpoint (HEAD)`
-        );
-        (0, import_process.exit)(0);
+        log.success(phrases2.success);
+        (0, import_process2.exit)(0);
       }
     );
   }
 };
-gotomain.action(async () => {
+main.action(async () => {
   await _2.action();
 });
 
 // src/commands/init.ts
 var import_child_process3 = require("child_process");
+var import_process3 = require("process");
 var init = new Command("init");
-var phrases2 = {
+var phrases3 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   success: "Congratulations! You created a `flig` repository. Which is really a git repository, since `flig` is a wrapper around it :)",
   explanation: `1) git init -q -b main
@@ -31943,14 +31943,15 @@ var _3 = {
   title: "init",
   description: "Initialize repository",
   action: (options) => {
-    (0, import_child_process3.exec)(`git init -q -b main`, (err, _8) => {
+    (0, import_child_process3.exec)(`git init -q -b main`, (err, _9) => {
       if (err) {
-        log.error(phrases2.error);
+        log.error(phrases3.error);
       }
-      log.success(phrases2.success);
+      log.success(phrases3.success);
       if (options.explain) {
-        log.info(phrases2.explanation);
+        log.info(phrases3.explanation);
       }
+      (0, import_process3.exit)(0);
     });
   }
 };
@@ -31962,8 +31963,9 @@ init.addOption(
 
 // src/commands/moveto.ts
 var import_child_process4 = require("child_process");
+var import_process4 = require("process");
 var moveto = new Command("moveto");
-var phrases3 = {
+var phrases4 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   explanation: `1) git checkout <branch name>'
 Without any flags (like -b) git checkout switches between branches (pinpoints, in flig terms).
@@ -31975,14 +31977,15 @@ var _4 = {
   action: (branchName, options) => {
     (0, import_child_process4.exec)(`git checkout ${branchName}`, (err, stdout) => {
       if (err) {
-        log.error(phrases3.error);
+        log.error(phrases4.error);
       }
       log.success(
         `Congratz! You are now on ${branchName} branch. This is your new pinpoint (HEAD)`
       );
       if (options.explain) {
-        log.info(phrases3.explanation);
+        log.info(phrases4.explanation);
       }
+      (0, import_process4.exit)(0);
     });
   }
 };
@@ -32035,10 +32038,18 @@ var localOwner = [
     message: "Let's also add an email (Github is kinda peaky about this!)"
   }
 ];
+var saveQuestion = [
+  {
+    type: "input",
+    name: "commit",
+    message: "A good commit requires a good message. Let's add one. What did you do? Try to describe it in less than 10 words!"
+  }
+];
 
 // src/commands/own.ts
+var import_process5 = require("process");
 var own = new Command("own");
-var phrases4 = {
+var phrases5 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   success: "Nice job! You just changed the user of the repository (locally!)",
   explanation: `1) git config --local user.name '<username>'
@@ -32053,14 +32064,15 @@ var _5 = {
     import_inquirer.default.prompt(localOwner).then((answer) => {
       (0, import_child_process5.exec)(
         `git config --local user.name '${answer.name}' && git config --local user.email '${answer.email}'`,
-        (err, _8) => {
+        (err, _9) => {
           if (err) {
-            log.error(phrases4.error);
+            log.error(phrases5.error);
           }
-          log.success(phrases4.success);
+          log.success(phrases5.success);
           if (options.explain) {
-            log.info(phrases4.explanation);
+            log.info(phrases5.explanation);
           }
+          (0, import_process5.exit)(0);
         }
       );
     });
@@ -32074,8 +32086,9 @@ own.addOption(
 
 // src/commands/show.ts
 var import_child_process6 = require("child_process");
+var import_process6 = require("process");
 var show = new Command("show");
-var phrases5 = {
+var phrases6 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   explanation1: `1) git config -l
 Show local configuration of current repository.`,
@@ -32094,7 +32107,7 @@ var config = {
       }
       log.success(stdout);
       if (options.explain) {
-        log.info(phrases5.explanation1);
+        log.info(phrases6.explanation1);
       }
     });
   }
@@ -32118,8 +32131,9 @@ var logs = {
         }
       }
       if (options.explain) {
-        log.info(phrases5.explanation2);
+        log.info(phrases6.explanation2);
       }
+      (0, import_process6.exit)(0);
     });
   }
 };
@@ -32136,9 +32150,10 @@ show.command(logs.title).addOption(
 
 // src/commands/start.ts
 var import_child_process7 = require("child_process");
+var import_process7 = require("process");
 var import_inquirer2 = __toESM(require_inquirer());
 var start = new Command("start");
-var phrases6 = {
+var phrases7 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   explanation: `1) git checkout -b [<branch type>--]<branch name>
 Following flig rules, we name our branches with type and name, united with a double dash.
@@ -32151,16 +32166,17 @@ var _6 = {
     import_inquirer2.default.prompt(startQuestion).then((answer) => {
       (0, import_child_process7.exec)(
         `git checkout -b ${answer.branchType}--${answer.branchName}`,
-        (err, _8) => {
+        (err, _9) => {
           if (err) {
-            log.error(phrases6.error);
+            log.error(phrases7.error);
           }
           log.success(
             `Branch ${answer.branchType}--${answer.branchName} was successfully created and your project pinpoint (HEAD) has moved to it`
           );
           if (options.explain) {
-            log.info(phrases6.explanation);
+            log.info(phrases7.explanation);
           }
+          (0, import_process7.exit)(0);
         }
       );
     });
@@ -32174,8 +32190,9 @@ start.addOption(
 
 // src/commands/status.ts
 var import_child_process8 = require("child_process");
+var import_process8 = require("process");
 var status = new Command("status");
-var phrases7 = {
+var phrases8 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
   explanation: `1) git status
  The "status" command in git is useful to check if there are any files that were not added to the staging area or committed, among many other things (like deleted files and folders!).`
@@ -32186,12 +32203,13 @@ var _7 = {
   action: (options) => {
     (0, import_child_process8.exec)(`git status`, (err, stdout) => {
       if (err) {
-        log.error(phrases7.error);
+        log.error(phrases8.error);
       }
       log.boring(stdout);
       if (options.explain) {
-        log.info(phrases7.explanation);
+        log.info(phrases8.explanation);
       }
+      (0, import_process8.exit)(0);
     });
   }
 };
@@ -32199,6 +32217,46 @@ status.addOption(
   new Option("-e, --explain", "to read git commands and explanation")
 ).action(async (options) => {
   await _7.action(options);
+});
+
+// src/commands/save.ts
+var import_child_process9 = require("child_process");
+var import_inquirer3 = __toESM(require_inquirer());
+var import_process9 = require("process");
+var save = new Command("save");
+var phrases9 = {
+  error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
+  explanation: `1) git
+`
+};
+var _8 = {
+  title: "save",
+  description: "save repository",
+  action: (options) => {
+    import_inquirer3.default.prompt(saveQuestion).then((answer) => {
+      const message = answer.commit;
+      const withMain = options.withMain ? "&& git merge --no-ff main" : "";
+      (0, import_child_process9.exec)(
+        `git add * && git commit -m "${message}" ${withMain}`,
+        (err, stdout) => {
+          if (err) {
+            console.log(err);
+            log.error(phrases9.error);
+          }
+          log.boring(stdout);
+          if (options.explain) {
+            log.info(phrases9.explanation);
+          }
+          (0, import_process9.exit)(0);
+        }
+      );
+    });
+  }
+};
+save.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).addOption(new Option("--with-main", "merge latest main to branch")).action(async (options) => {
+  await _8.action(options);
 });
 
 // src/commands/index.ts
@@ -32210,16 +32268,17 @@ flig.addCommand(init);
 flig.addCommand(show);
 flig.addCommand(start);
 flig.addCommand(moveto);
-flig.addCommand(gotomain);
+flig.addCommand(main);
 flig.addCommand(add);
 flig.addCommand(own);
 flig.addCommand(status);
+flig.addCommand(save);
 
 // src/index.ts
-async function main() {
+async function main2() {
   await flig.parseAsync();
 }
-main();
+main2();
 /*!
  * Tmp
  *
