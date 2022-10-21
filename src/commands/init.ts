@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import { Command, Option } from 'commander';
+import { exit } from 'process';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
 export const init = new Command('init');
@@ -24,6 +25,7 @@ const _: TCommands = {
       if (options.explain) {
         log.info(phrases.explanation);
       }
+      exit(0);
     });
   }
 };

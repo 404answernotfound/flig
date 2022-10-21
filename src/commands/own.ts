@@ -4,6 +4,7 @@ import { TCommands } from '../types';
 import { log } from '../utils/log';
 import inquirer from 'inquirer';
 import { localOwner } from 'src/constants';
+import { exit } from 'process';
 export const own = new Command('own');
 
 const phrases = {
@@ -30,6 +31,7 @@ const _: TCommands = {
             if (options.explain) {
               log.info(phrases.explanation);
             }
+            exit(0);
           }
         );
       });

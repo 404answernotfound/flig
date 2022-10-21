@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import { Command, Option } from 'commander';
+import { exit } from 'process';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
 export const show = new Command('show');
@@ -50,6 +51,7 @@ const logs: TCommands = {
       if (options.explain) {
         log.info(phrases.explanation2);
       }
+      exit(0);
     });
   }
 };

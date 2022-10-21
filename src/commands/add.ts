@@ -8,6 +8,7 @@ export const add = new Command('add');
 const phrases = {
   error:
     'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)',
+  success: `Congratz! You added all the files and non empty folders to the staging area :)`,
   explanation: `1) git config --local user.name '<username>'\n2) git config --local user.email '<email>'\n\nThis is the command that we are using behind the curtain to create a new local owner of the repository. This is the name and email that you are going to see on the origin's repository whenever you push something to it (or sync, in flig terms)`
 };
 
@@ -22,10 +23,11 @@ const _: TCommands = {
           log.error(err.toString());
         }
       }
-      log.success(`Congratz! You added all the files and non empty folders to the staging area :)`);
+      log.success(phrases.success);
       if (options.explain) {
         log.info(phrases.explanation);
       }
+      exit(0);
     });
   }
 };

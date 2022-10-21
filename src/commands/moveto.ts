@@ -26,6 +26,7 @@ const _: TCommands = {
       if (options.explain) {
         log.info(phrases.explanation);
       }
+      exit(0);
     });
   }
 };

@@ -32,6 +32,29 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 - [ ] Interactive tutorial to learn `git` as used by `flig`
 - [ ] Configurable git flow (the magic behind the command `flig`)
 
+## Commands already available
+
+```bash
+- [ ] flig # for now is help
+- [x] flig help
+- [x] flig init
+- [x] flig own [--local [--global]] # no global yet
+- [x] flig start
+- [x] flig moveto [branch name]
+- [x] flig 
+- [x] flig add [single file, *] # only all files
+- [ ] flig save [[--withMaster [origin] branch name]
+- [ ] flig sync [[origin] branch name]
+- [ ] flig pick [--withoutSaving [origin] commit hash]
+- [ ] flig forward [number]
+- [ ] flig backward [number]
+- [ ] flig revert [--n number [--commit commit hash]]
+- [ ] flig config
+- [x] flig show config
+- [x] flig show logs
+- [x] flig status
+```
+
 ## Usage/Examples
 
 ```bash
