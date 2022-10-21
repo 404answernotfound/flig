@@ -34,7 +34,6 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 
 ## Commands already available
 
-```bash
 - [ ] flig # for now is help
 - [x] flig help
 - [x] flig init
@@ -53,7 +52,6 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 - [x] flig show config
 - [x] flig show logs
 - [x] flig status
-```
 
 ## Usage/Examples
 
