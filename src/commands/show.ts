@@ -1,6 +1,7 @@
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { Command, Option } from 'commander';
 import { exit } from 'process';
+import onExit from 'src/utils/onExit';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
 export const show = new Command('show');
@@ -33,26 +34,17 @@ const config: TCommands = {
 const logs: TCommands = {
   title: 'logs',
   description: 'Shows logs',
-  action: (options) => {
-    exec(`git log --oneline`, (err, stdout) => {
-      if (err) {
-        log.error(
-          'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)'
-        );
-      }
-      const _stdout = stdout.split('\n');
-      for (let line = 0; line < _stdout.length; line++) {
-        if (line === 0) {
-          log.first(_stdout[line]);
-        } else {
-          log.boring(_stdout[line]);
-        }
-      }
-      if (options.explain) {
-        log.info(phrases.explanation2);
-      }
-      exit(0);
+  action: async (options) => {
+    const childProcess = spawn(`git log --oneline`, {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      shell: true
     });
+
+    await onExit(childProcess);
+    if (options.explain) {
+      log.info(phrases.explanation2);
+    }
+    exit(0);
   }
 };
 

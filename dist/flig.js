@@ -31914,7 +31914,7 @@ var _2 = {
   description: "Move to branch",
   action: () => {
     (0, import_child_process2.exec)(
-      `cat .git/config | grep -oE -m 1 "main|master" | xargs -I {} bash -c 'git checkout {}'`,
+      `git config -l | grep -oE -m 1 "main|master" | xargs -I {} bash -c 'git checkout {}'`,
       (err, _9) => {
         if (err) {
           log.error(phrases2.error);
@@ -32087,6 +32087,24 @@ own.addOption(
 // src/commands/show.ts
 var import_child_process6 = require("child_process");
 var import_process6 = require("process");
+
+// src/utils/onExit.ts
+function onExit(childProcess) {
+  return new Promise((resolve, reject) => {
+    childProcess.once("exit", (code, signal) => {
+      if (code === 0) {
+        resolve(void 0);
+      } else {
+        reject();
+      }
+    });
+    childProcess.once("error", (err) => {
+      reject();
+    });
+  });
+}
+
+// src/commands/show.ts
 var show = new Command("show");
 var phrases6 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
@@ -32115,26 +32133,16 @@ var config = {
 var logs = {
   title: "logs",
   description: "Shows logs",
-  action: (options) => {
-    (0, import_child_process6.exec)(`git log --oneline`, (err, stdout) => {
-      if (err) {
-        log.error(
-          "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)"
-        );
-      }
-      const _stdout = stdout.split("\n");
-      for (let line = 0; line < _stdout.length; line++) {
-        if (line === 0) {
-          log.first(_stdout[line]);
-        } else {
-          log.boring(_stdout[line]);
-        }
-      }
-      if (options.explain) {
-        log.info(phrases6.explanation2);
-      }
-      (0, import_process6.exit)(0);
+  action: async (options) => {
+    const childProcess = (0, import_child_process6.spawn)(`git log --oneline`, {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      shell: true
     });
+    await onExit(childProcess);
+    if (options.explain) {
+      log.info(phrases6.explanation2);
+    }
+    (0, import_process6.exit)(0);
   }
 };
 show.command(config.title).addOption(
@@ -32226,36 +32234,54 @@ var import_process9 = require("process");
 var save = new Command("save");
 var phrases9 = {
   error: "Seems like this is not a git repository at this time. Are you sure you are in the right place? :)",
-  explanation: `1) git
-`
+  warning1: `There was either nothing to add or nothing to commit!`,
+  warning2: `Well, nothing to merge from the main branch!`,
+  explanation: `1) git add *
+2) git commit -m "A descriptive message"
+3) git merge main
+The first command takes care of adding everything into the staging area (where you keep track of your changes), the second command commits those changes (saves a point in time, what we refer to as pinpoint), the third command tries to sync the changes from the main branch into the feature/bugfix/hotfix branch you are working on :)`
 };
 var _8 = {
   title: "save",
   description: "save repository",
   action: (options) => {
-    import_inquirer3.default.prompt(saveQuestion).then((answer) => {
+    if (options.onlyExplain) {
+      log.info(phrases9.explanation);
+      (0, import_process9.exit)(0);
+    }
+    import_inquirer3.default.prompt(saveQuestion).then(async (answer) => {
       const message = answer.commit;
-      const withMain = options.withMain ? "&& git merge --no-ff main" : "";
-      (0, import_child_process9.exec)(
-        `git add * && git commit -m "${message}" ${withMain}`,
-        (err, stdout) => {
-          if (err) {
-            console.log(err);
-            log.error(phrases9.error);
-          }
-          log.boring(stdout);
-          if (options.explain) {
-            log.info(phrases9.explanation);
-          }
-          (0, import_process9.exit)(0);
+      const withMain = options.withMain ? "git merge main" : "";
+      const childProcess = (0, import_child_process9.spawn)(`git add * && git commit -m "${message}"`, {
+        stdio: [process.stdin, process.stdout, process.stderr],
+        shell: true
+      });
+      try {
+        await onExit(childProcess);
+      } catch (e) {
+        log.warning(phrases9.warning1);
+      }
+      if (options.withMain) {
+        const mergeProcess = (0, import_child_process9.spawn)(withMain, {
+          stdio: [process.stdin, process.stdout, process.stderr],
+          shell: true
+        });
+        try {
+          await onExit(mergeProcess);
+        } catch (e) {
+          log.warning(phrases9.warning2);
         }
-      );
+      }
+      if (options.explain) {
+        log.info(phrases9.explanation);
+      }
+      (0, import_process9.exit)(0);
     });
   }
 };
 save.addOption(
   new Option("-e, --explain", "to read git commands and explanation")
-).addOption(new Option("--with-main", "merge latest main to branch")).action(async (options) => {
+).addOption(new Option("-oe, --only-explain", "to read explanation only")).addOption(new Option("--with-main", "merge latest main to branch")).action(async (options) => {
   await _8.action(options);
 });
 
