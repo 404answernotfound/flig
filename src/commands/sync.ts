@@ -28,10 +28,13 @@ const _: TCommands = {
           exit(0);
         }
 
-        const childProcess = spawn(`git pull ${answer.branchName} && git push origin ${answer.branchName}`, {
-          stdio: [process.stdin, process.stdout, process.stderr],
-          shell: true
-        });
+        const childProcess = spawn(
+          `git pull ${answer.branchName} && git push origin ${answer.branchName}`,
+          {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            shell: true
+          }
+        );
 
         try {
           await onExit(childProcess);

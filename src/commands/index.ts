@@ -8,6 +8,7 @@ import { show } from './show';
 import { start } from './start';
 import { status } from './status';
 import { save } from './save';
+import { sync } from './sync';
 export const flig = new Command();
 
 flig
@@ -26,3 +27,4 @@ flig.addCommand(add);
 flig.addCommand(own);
 flig.addCommand(status);
 flig.addCommand(save);
+flig.addCommand(sync);
