@@ -43,7 +43,7 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 - [x] flig 
 - [x] flig add [single file, *] # only all files
 - [x] flig save [--withMaster]
-- [ ] flig sync [[origin] branch name]
+- [x] flig sync
 - [ ] flig pick [--withoutSaving [origin] commit hash]
 - [ ] flig forward [number]
 - [ ] flig backward [number]
@@ -64,7 +64,7 @@ flig start [branch name] # start new branch
 flig moveto [branch name] # checkout to branch
 flig add [single file, *] # stages changes
 flig save [--withMaster] # commits staged changes and if --withMaster is true, tries to merge latest master after committing
-flig sync [[origin] branch name] # pulls latest, if conflict tries to resolve, pushes. By default checkout master, pull latest, merge master into branch, pull latest from branch, push.
+flig sync # pulls latest, if conflict tries to resolve, pushes. By default checkout master, pull latest, merge master into branch, pull latest from branch, push.
 flig pick [--withoutSaving [origin] commit hash] # cherry picks specific commit, if --withoutSaving is active does only add without committing (-n)
 flig forward [number] # goes to next commit in the tree/branch, if exists. By default number is 1 unless specified
 flig backward [number] # goes to previous commit in the tree/branch, if exists. By default number is 1 unless specified
