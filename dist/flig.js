@@ -32314,7 +32314,7 @@ var _9 = {
         (0, import_process10.exit)(0);
       }
       const childProcess = (0, import_child_process10.spawn)(
-        `git push origin ${answer.branchName} && git pull ${answer.branchName} && git push origin ${answer.branchName}`,
+        `git push origin ${answer.branchName} && git pull origin ${answer.branchName} && git push origin ${answer.branchName}`,
         {
           stdio: [process.stdin, process.stdout, process.stderr],
           shell: true
