@@ -32259,7 +32259,7 @@ var _8 = {
     import_inquirer3.default.prompt(saveQuestion).then(async (answer) => {
       const message = answer.commit;
       const withMain = options.withMain ? "git merge main" : "";
-      const childProcess = (0, import_child_process9.spawn)(`git add * && git commit -m "${message}"`, {
+      const childProcess = (0, import_child_process9.spawn)(`git add . && git commit -m "${message}"`, {
         stdio: [process.stdin, process.stdout, process.stderr],
         shell: true
       });
@@ -32314,7 +32314,7 @@ var _9 = {
         (0, import_process10.exit)(0);
       }
       const childProcess = (0, import_child_process10.spawn)(
-        `git pull ${answer.branchName} && git push origin ${answer.branchName}`,
+        `git push origin ${answer.branchName} && git pull ${answer.branchName} && git push origin ${answer.branchName}`,
         {
           stdio: [process.stdin, process.stdout, process.stderr],
           shell: true

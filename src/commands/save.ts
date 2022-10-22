@@ -32,7 +32,7 @@ const _: TCommands = {
       const message = answer.commit;
       const withMain = options.withMain ? 'git merge main' : '';
 
-      const childProcess = spawn(`git add * && git commit -m "${message}"`, {
+      const childProcess = spawn(`git add . && git commit -m "${message}"`, {
         stdio: [process.stdin, process.stdout, process.stderr],
         shell: true
       });
