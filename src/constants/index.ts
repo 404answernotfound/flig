@@ -45,3 +45,11 @@ export const saveQuestion = [
         message: 'A good commit requires a good message. Let\'s add one. What did you do? Try to describe it in less than 10 words!',
     },
 ];
+
+export const syncQuestion = [
+    {
+        type: 'input',
+        name: 'branchName',
+        message: 'We are about to sync with origin. What branch would you like to sync? Defaults to `all` if left empty',
+    },
+];
