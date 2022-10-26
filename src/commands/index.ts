@@ -9,6 +9,8 @@ import { start } from './start';
 import { status } from './status';
 import { save } from './save';
 import { sync } from './sync';
+import { forward } from './forward';
+import { backward } from './backward';
 export const flig = new Command();
 
 flig
@@ -28,3 +30,5 @@ flig.addCommand(own);
 flig.addCommand(status);
 flig.addCommand(save);
 flig.addCommand(sync);
+flig.addCommand(forward);
+flig.addCommand(backward);

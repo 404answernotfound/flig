@@ -6880,7 +6880,7 @@ var require_mute = __commonJS({
 var require_baseUI = __commonJS({
   "node_modules/inquirer/lib/ui/baseUI.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       extend: require_extend(),
       omit: require_omit()
     };
@@ -6927,13 +6927,13 @@ var require_baseUI = __commonJS({
       var ms = new MuteStream();
       ms.pipe(opt.output || process.stdout);
       var output = ms;
-      return _10.extend(
+      return _12.extend(
         {
           terminal: true,
           input,
           output
         },
-        _10.omit(opt, ["input", "output"])
+        _12.omit(opt, ["input", "output"])
       );
     }
     module2.exports = UI;
@@ -7091,7 +7091,7 @@ var require_bottom_bar = __commonJS({
     var through = require_through();
     var Base = require_baseUI();
     var rlUtils = require_readline();
-    var _10 = {
+    var _12 = {
       last: require_last()
     };
     var BottomBar = class extends Base {
@@ -7133,7 +7133,7 @@ var require_bottom_bar = __commonJS({
       write(message) {
         var msgLines = message.split(/\n/);
         this.height = msgLines.length;
-        this.rl.setPrompt(_10.last(msgLines));
+        this.rl.setPrompt(_12.last(msgLines));
         if (this.rl.output.rows === 0 && this.rl.output.columns === 0) {
           rlUtils.left(this.rl, message.length + this.rl.line.length);
         }
@@ -19180,13 +19180,13 @@ var require_run_async = __commonJS({
 var require_utils = __commonJS({
   "node_modules/inquirer/lib/utils/utils.js"(exports) {
     "use strict";
-    var _10 = {
+    var _12 = {
       isFunction: require_isFunction()
     };
     var { from, of } = require_rxjs();
     var runAsync = require_run_async();
     exports.fetchAsyncQuestionProperty = function(question, prop, answers) {
-      if (!_10.isFunction(question[prop])) {
+      if (!_12.isFunction(question[prop])) {
         return of(question);
       }
       return from(
@@ -19203,7 +19203,7 @@ var require_utils = __commonJS({
 var require_prompt = __commonJS({
   "node_modules/inquirer/lib/ui/prompt.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       isPlainObject: require_isPlainObject(),
       clone: require_clone(),
       isArray: require_isArray(),
@@ -19221,15 +19221,15 @@ var require_prompt = __commonJS({
         this.prompts = prompts;
       }
       run(questions, answers) {
-        if (_10.isPlainObject(answers)) {
-          this.answers = _10.clone(answers);
+        if (_12.isPlainObject(answers)) {
+          this.answers = _12.clone(answers);
         } else {
           this.answers = {};
         }
-        if (_10.isPlainObject(questions)) {
+        if (_12.isPlainObject(questions)) {
           questions = [questions];
         }
-        var obs = _10.isArray(questions) ? from(questions) : questions;
+        var obs = _12.isArray(questions) ? from(questions) : questions;
         this.process = obs.pipe(
           concatMap(this.processQuestion.bind(this)),
           publish()
@@ -19237,7 +19237,7 @@ var require_prompt = __commonJS({
         this.process.connect();
         return this.process.pipe(
           reduce((answers2, answer) => {
-            _10.set(answers2, answer.name, answer.answer);
+            _12.set(answers2, answer.name, answer.answer);
             return answers2;
           }, this.answers)
         ).toPromise(Promise).then(this.onCompletion.bind(this), this.onError.bind(this));
@@ -19251,7 +19251,7 @@ var require_prompt = __commonJS({
         return Promise.reject(error);
       }
       processQuestion(question) {
-        question = _10.clone(question);
+        question = _12.clone(question);
         return defer(() => {
           var obs = of(question);
           return obs.pipe(
@@ -19292,7 +19292,7 @@ var require_prompt = __commonJS({
         if (question.when === false) {
           return empty();
         }
-        if (!_10.isFunction(question.when)) {
+        if (!_12.isFunction(question.when)) {
           return of(question);
         }
         var answers = this.answers;
@@ -20601,7 +20601,7 @@ var require_find2 = __commonJS({
 var require_choice = __commonJS({
   "node_modules/inquirer/lib/objects/choice.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       isString: require_isString(),
       isNumber: require_isNumber(),
       extend: require_extend(),
@@ -20612,18 +20612,18 @@ var require_choice = __commonJS({
         if (val instanceof Choice || val.type === "separator") {
           return val;
         }
-        if (_10.isString(val) || _10.isNumber(val)) {
+        if (_12.isString(val) || _12.isNumber(val)) {
           this.name = String(val);
           this.value = val;
           this.short = String(val);
         } else {
-          _10.extend(this, val, {
+          _12.extend(this, val, {
             name: val.name || val.value,
             value: "value" in val ? val.value : val.name,
             short: val.short || val.name || val.value
           });
         }
-        if (_10.isFunction(val.disabled)) {
+        if (_12.isFunction(val.disabled)) {
           this.disabled = val.disabled(answers);
         } else {
           this.disabled = val.disabled;
@@ -20638,7 +20638,7 @@ var require_choices = __commonJS({
   "node_modules/inquirer/lib/objects/choices.js"(exports, module2) {
     "use strict";
     var assert = require("assert");
-    var _10 = {
+    var _12 = {
       isNumber: require_isNumber(),
       filter: require_filter2(),
       map: require_map2(),
@@ -20676,18 +20676,18 @@ var require_choices = __commonJS({
         });
       }
       getChoice(selector) {
-        assert(_10.isNumber(selector));
+        assert(_12.isNumber(selector));
         return this.realChoices[selector];
       }
       get(selector) {
-        assert(_10.isNumber(selector));
+        assert(_12.isNumber(selector));
         return this.choices[selector];
       }
       where(whereClause) {
-        return _10.filter(this.realChoices, whereClause);
+        return _12.filter(this.realChoices, whereClause);
       }
       pluck(propertyName) {
-        return _10.map(this.realChoices, propertyName);
+        return _12.map(this.realChoices, propertyName);
       }
       indexOf() {
         return this.choices.indexOf.apply(this.choices, arguments);
@@ -20702,10 +20702,10 @@ var require_choices = __commonJS({
         return this.choices.reduce.apply(this.choices, arguments);
       }
       find(func) {
-        return _10.find(this.choices, func);
+        return _12.find(this.choices, func);
       }
       push() {
-        var objs = _10.map(arguments, (val) => new Choice(val));
+        var objs = _12.map(arguments, (val) => new Choice(val));
         this.choices.push.apply(this.choices, objs);
         this.realChoices = this.choices.filter(Separator.exclude).filter((item) => !item.disabled);
         return this.choices;
@@ -20849,7 +20849,7 @@ var require_string_width = __commonJS({
 var require_screen_manager = __commonJS({
   "node_modules/inquirer/lib/utils/screen-manager.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       last: require_last(),
       flatten: require_flatten()
     };
@@ -20861,7 +20861,7 @@ var require_screen_manager = __commonJS({
       return content.split("\n").length;
     }
     function lastLine(content) {
-      return _10.last(content.split("\n"));
+      return _12.last(content.split("\n"));
     }
     var ScreenManager = class {
       constructor(rl) {
@@ -20937,7 +20937,7 @@ var require_screen_manager = __commonJS({
       }
       forceLineReturn(content, width) {
         width = width || this.normalizedCliWidth();
-        return _10.flatten(this.breakLines(content.split("\n"), width)).join("\n");
+        return _12.flatten(this.breakLines(content.split("\n"), width)).join("\n");
       }
     };
     module2.exports = ScreenManager;
@@ -20948,7 +20948,7 @@ var require_screen_manager = __commonJS({
 var require_base = __commonJS({
   "node_modules/inquirer/lib/prompts/base.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       assign: require_assign(),
       defaults: require_defaults(),
       clone: require_clone()
@@ -20960,11 +20960,11 @@ var require_base = __commonJS({
     var ScreenManager = require_screen_manager();
     var Prompt = class {
       constructor(question, rl, answers) {
-        _10.assign(this, {
+        _12.assign(this, {
           answers,
           status: "pending"
         });
-        this.opt = _10.defaults(_10.clone(question), {
+        this.opt = _12.defaults(_12.clone(question), {
           validate: () => true,
           filter: (val) => val,
           when: () => true,
@@ -21126,7 +21126,7 @@ var require_sum = __commonJS({
 var require_paginator = __commonJS({
   "node_modules/inquirer/lib/utils/paginator.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       sum: require_sum(),
       flatten: require_flatten()
     };
@@ -21143,8 +21143,8 @@ var require_paginator = __commonJS({
         var lines = output.split("\n");
         if (this.screen) {
           lines = this.screen.breakLines(lines);
-          active = _10.sum(lines.map((lineParts) => lineParts.length).splice(0, active));
-          lines = _10.flatten(lines);
+          active = _12.sum(lines.map((lineParts) => lineParts.length).splice(0, active));
+          lines = _12.flatten(lines);
         }
         if (lines.length <= pageSize) {
           return output;
@@ -21161,7 +21161,7 @@ var require_paginator = __commonJS({
         if (this.pointer < middleOfList && this.lastIndex < active && active - this.lastIndex < pageSize) {
           this.pointer = Math.min(middleOfList, this.pointer + active - this.lastIndex);
         }
-        var infinite = _10.flatten([lines, lines, lines]);
+        var infinite = _12.flatten([lines, lines, lines]);
         var topIndex = Math.max(0, active + lines.length - this.pointer);
         return infinite.splice(topIndex, pageSize);
       }
@@ -21207,7 +21207,7 @@ var require_incrementListIndex = __commonJS({
 var require_list = __commonJS({
   "node_modules/inquirer/lib/prompts/list.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       isNumber: require_isNumber(),
       findIndex: require_findIndex2(),
       isString: require_isString()
@@ -21230,10 +21230,10 @@ var require_list = __commonJS({
         this.firstRender = true;
         this.selected = 0;
         var def = this.opt.default;
-        if (_10.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
+        if (_12.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
           this.selected = def;
-        } else if (!_10.isNumber(def) && def != null) {
-          let index = _10.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
+        } else if (!_12.isNumber(def) && def != null) {
+          let index = _12.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
           this.selected = Math.max(index, 0);
         }
         this.opt.default = null;
@@ -21324,7 +21324,7 @@ var require_list = __commonJS({
         if (choice.disabled) {
           separatorOffset++;
           output += "  - " + choice.name;
-          output += " (" + (_10.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
+          output += " (" + (_12.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
           output += "\n";
           return;
         }
@@ -21449,7 +21449,7 @@ var require_isBoolean = __commonJS({
 var require_confirm = __commonJS({
   "node_modules/inquirer/lib/prompts/confirm.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       extend: require_extend(),
       isBoolean: require_isBoolean()
     };
@@ -21461,7 +21461,7 @@ var require_confirm = __commonJS({
       constructor(questions, rl, answers) {
         super(questions, rl, answers);
         var rawDefault = true;
-        _10.extend(this.opt, {
+        _12.extend(this.opt, {
           filter: function(input) {
             var value = rawDefault;
             if (input != null && input !== "") {
@@ -21470,7 +21470,7 @@ var require_confirm = __commonJS({
             return value;
           }
         });
-        if (_10.isBoolean(this.opt.default)) {
+        if (_12.isBoolean(this.opt.default)) {
           rawDefault = this.opt.default;
         }
         this.opt.default = rawDefault ? "Y/n" : "y/N";
@@ -21512,7 +21512,7 @@ var require_confirm = __commonJS({
 var require_rawlist = __commonJS({
   "node_modules/inquirer/lib/prompts/rawlist.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       extend: require_extend(),
       isNumber: require_isNumber(),
       findIndex: require_findIndex2()
@@ -21533,17 +21533,17 @@ var require_rawlist = __commonJS({
         this.opt.validChoices = this.opt.choices.filter(Separator.exclude);
         this.selected = 0;
         this.rawDefault = 0;
-        _10.extend(this.opt, {
+        _12.extend(this.opt, {
           validate: function(val) {
             return val != null;
           }
         });
         var def = this.opt.default;
-        if (_10.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
+        if (_12.isNumber(def) && def >= 0 && def < this.opt.choices.realLength) {
           this.selected = def;
           this.rawDefault = def;
-        } else if (!_10.isNumber(def) && def != null) {
-          let index = _10.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
+        } else if (!_12.isNumber(def) && def != null) {
+          let index = _12.findIndex(this.opt.choices.realChoices, ({ value }) => value === def);
           let safeIndex = Math.max(index, 0);
           this.selected = safeIndex;
           this.rawDefault = safeIndex;
@@ -21804,7 +21804,7 @@ var require_uniq = __commonJS({
 var require_expand2 = __commonJS({
   "node_modules/inquirer/lib/prompts/expand.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       uniq: require_uniq(),
       isString: require_isString(),
       isNumber: require_isNumber(),
@@ -21946,16 +21946,16 @@ var require_expand2 = __commonJS({
         }
         if (errors.length) {
           throw new Error(
-            "Duplicate key error: `key` param must be unique. Duplicates: " + _10.uniq(errors).join(", ")
+            "Duplicate key error: `key` param must be unique. Duplicates: " + _12.uniq(errors).join(", ")
           );
         }
       }
       generateChoicesString(choices, defaultChoice) {
         var defIndex = choices.realLength - 1;
-        if (_10.isNumber(defaultChoice) && this.opt.choices.getChoice(defaultChoice)) {
+        if (_12.isNumber(defaultChoice) && this.opt.choices.getChoice(defaultChoice)) {
           defIndex = defaultChoice;
-        } else if (_10.isString(defaultChoice)) {
-          let index = _10.findIndex(
+        } else if (_12.isString(defaultChoice)) {
+          let index = _12.findIndex(
             choices.realChoices,
             ({ value }) => value === defaultChoice
           );
@@ -21991,7 +21991,7 @@ var require_expand2 = __commonJS({
 var require_checkbox = __commonJS({
   "node_modules/inquirer/lib/prompts/checkbox.js"(exports, module2) {
     "use strict";
-    var _10 = {
+    var _12 = {
       isArray: require_isArray(),
       map: require_map2(),
       isString: require_isString()
@@ -22010,7 +22010,7 @@ var require_checkbox = __commonJS({
         if (!this.opt.choices) {
           this.throwParamError("choices");
         }
-        if (_10.isArray(this.opt.default)) {
+        if (_12.isArray(this.opt.default)) {
           this.opt.choices.forEach(function(choice) {
             if (this.opt.default.indexOf(choice.value) >= 0) {
               choice.checked = true;
@@ -22090,8 +22090,8 @@ var require_checkbox = __commonJS({
         var choices = this.opt.choices.filter(function(choice) {
           return Boolean(choice.checked) && !choice.disabled;
         });
-        this.selection = _10.map(choices, "short");
-        return _10.map(choices, "value");
+        this.selection = _12.map(choices, "short");
+        return _12.map(choices, "value");
       }
       onUpKey() {
         this.pointer = incrementListIndex(this.pointer, "up", this.opt);
@@ -22153,7 +22153,7 @@ var require_checkbox = __commonJS({
         if (choice.disabled) {
           separatorOffset++;
           output += " - " + choice.name;
-          output += " (" + (_10.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
+          output += " (" + (_12.isString(choice.disabled) ? choice.disabled : "Disabled") + ")";
         } else {
           var line = getCheckbox(choice.checked) + " " + choice.name;
           if (i - separatorOffset === pointer) {
@@ -31878,7 +31878,7 @@ var _ = {
   title: "add",
   description: "Add files to branch",
   action: (options) => {
-    (0, import_child_process.exec)(`git add *`, (err, _10) => {
+    (0, import_child_process.exec)(`git add *`, (err, _12) => {
       if (err) {
         log.error(phrases.error);
         if (options.error) {
@@ -31915,7 +31915,7 @@ var _2 = {
   action: () => {
     (0, import_child_process2.exec)(
       `git config -l | grep -oE -m 1 "main|master" | xargs -I {} bash -c 'git checkout {}'`,
-      (err, _10) => {
+      (err, _12) => {
         if (err) {
           log.error(phrases2.error);
         }
@@ -31943,7 +31943,7 @@ var _3 = {
   title: "init",
   description: "Initialize repository",
   action: (options) => {
-    (0, import_child_process3.exec)(`git init -q -b main`, (err, _10) => {
+    (0, import_child_process3.exec)(`git init -q -b main`, (err, _12) => {
       if (err) {
         log.error(phrases3.error);
       }
@@ -32071,7 +32071,7 @@ var _5 = {
     import_inquirer.default.prompt(localOwner).then((answer) => {
       (0, import_child_process5.exec)(
         `git config --local user.name '${answer.name}' && git config --local user.email '${answer.email}'`,
-        (err, _10) => {
+        (err, _12) => {
           if (err) {
             log.error(phrases5.error);
           }
@@ -32181,7 +32181,7 @@ var _6 = {
     import_inquirer2.default.prompt(startQuestion).then((answer) => {
       (0, import_child_process7.exec)(
         `git checkout -b ${answer.branchType}--${answer.branchName}`,
-        (err, _10) => {
+        (err, _12) => {
           if (err) {
             log.error(phrases7.error);
           }
@@ -32338,6 +32338,118 @@ sync.addOption(
   await _9.action(options);
 });
 
+// src/commands/forward.ts
+var import_child_process11 = require("child_process");
+var import_process11 = require("process");
+var forward = new Command("forward");
+var phrases11 = {
+  error: "This is kinda weird but, I'm not sure what error this is!",
+  warning1: `There was either nothing to add or nothing to commit!`,
+  explanation: `1) git reflog | grep $(git rev-parse --short HEAD) | awk '{print $2}' | tail -1 | grep -o '[[:digit:]]*' | xargs -I {} expr {} - 1 | xargs -I {} git checkout HEAD@{{}}
+
+Yeah, I cant see your face but I imagine this aint so easy
+
+The easy explanation just says that we are finding the next commit (pinpoint) in the tree and moving to it. If you want a more complete one,
+
+
+git reflog # Here we get all the commits we need
+grep $(git rev-parse --short HEAD) # Here we grep for the short commit hash
+awk '{print $2}' # Here we get just the HEAD@{n}:
+tail -1 # We will get at least 2 results, pick the last line, the first would be 0
+grep -o '[[:digit:]]*' # Here we grep the HEAD digit
+xargs -I {} expr {} - 1 # Here we go "forward by 1"
+xargs -I {} git checkout HEAD@{{}} # Here we checkout out the branch at HEAD@{n - 1}`
+};
+var _10 = {
+  title: "forward",
+  description: "forward repository",
+  action: async (options) => {
+    if (options.onlyExplain) {
+      log.info(phrases11.explanation);
+      (0, import_process11.exit)(0);
+    }
+    const childProcess = (0, import_child_process11.spawn)(
+      `git log --all --decorate --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | head -1 | xargs -I {} git checkout {}`,
+      {
+        stdio: [process.stdin, process.stdout, process.stderr],
+        shell: true
+      }
+    );
+    try {
+      await onExit(childProcess);
+    } catch (e) {
+      log.warning(phrases11.warning1);
+    }
+    if (options.explain) {
+      log.info(phrases11.explanation);
+    }
+    (0, import_process11.exit)(0);
+  }
+};
+forward.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).addOption(new Option("-oe, --only-explain", "to read explanation only")).addOption(
+  new Option("-n, --number", "how many times to forward from this pinpoint")
+).action(async (options) => {
+  await _10.action(options);
+});
+
+// src/commands/backward.ts
+var import_child_process12 = require("child_process");
+var import_process12 = require("process");
+var backward = new Command("backward");
+var phrases12 = {
+  error: "This is kinda weird but, I'm not sure what error this is!",
+  warning1: `There was either nothing to add or nothing to commit!`,
+  explanation: `1) git reflog | grep $(git rev-parse --short HEAD) | awk '{print $2}' | tail -1 | grep -o '[[:digit:]]*' | xargs -I {} expr {} + 1 | xargs -I {} git checkout HEAD@{{}}
+
+Yeah, I cant see your face but I imagine this aint so easy
+
+The easy explanation just says that we are finding the next commit (pinpoint) in the tree and moving to it. If you want a more complete one,
+
+
+git reflog # Here we get all the commits we need
+grep $(git rev-parse --short HEAD) # Here we grep for the short commit hash
+awk '{print $2}' # Here we get just the HEAD@{n}:
+tail -1 # We will get at least 2 results, pick the last line, the first would be 0
+grep -o '[[:digit:]]*' # Here we grep the HEAD digit
+xargs -I {} expr {} - 1 # Here we go "backward by 1"
+xargs -I {} git checkout HEAD@{{}} # Here we checkout out the branch at HEAD@{n - 1}`
+};
+var _11 = {
+  title: "backward",
+  description: "backward repository",
+  action: async (options) => {
+    if (options.onlyExplain) {
+      log.info(phrases12.explanation);
+      (0, import_process12.exit)(0);
+    }
+    const childProcess = (0, import_child_process12.spawn)(
+      `git log --all --decorate --oneline | grep -A 1 $(git rev-parse --short HEAD) | awk '{print $1}' | tail -1 | xargs -I {} git checkout {}`,
+      {
+        stdio: [process.stdin, process.stdout, process.stderr],
+        shell: true
+      }
+    );
+    try {
+      await onExit(childProcess);
+    } catch (e) {
+      log.warning(phrases12.warning1);
+    }
+    if (options.explain) {
+      log.info(phrases12.explanation);
+    }
+    (0, import_process12.exit)(0);
+  }
+};
+backward.addOption(
+  new Option("-e, --explain", "to read git commands and explanation")
+).addOption(new Option("-oe, --only-explain", "to read explanation only")).addOption(
+  new Option("-n, --number", "how many times to backward from this pinpoint")
+).action(async (options) => {
+  await _11.action(options);
+});
+
 // src/commands/index.ts
 var flig = new Command();
 flig.name("flig").description(
@@ -32353,6 +32465,8 @@ flig.addCommand(own);
 flig.addCommand(status);
 flig.addCommand(save);
 flig.addCommand(sync);
+flig.addCommand(forward);
+flig.addCommand(backward);
 
 // src/index.ts
 async function main2() {
