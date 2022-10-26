@@ -45,8 +45,8 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 - [x] flig save [--withMaster]
 - [x] flig sync
 - [ ] flig pick [--withoutSaving [origin] commit hash]
-- [ ] flig forward [number]
-- [ ] flig backward [number]
+- [x] flig forward [number]
+- [x] flig backward [number]
 - [ ] flig revert [--n number [--commit commit hash]]
 - [ ] flig config
 - [x] flig show config
