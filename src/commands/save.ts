@@ -22,7 +22,7 @@ const _: TCommands = {
   action: (options: {
     explain: boolean;
     onlyExplain: boolean;
-    withMain: boolean;
+    align: boolean;
   }) => {
     if (options.onlyExplain) {
       log.info(phrases.explanation);
@@ -30,7 +30,7 @@ const _: TCommands = {
     }
     inquirer.prompt(saveQuestion).then(async (answer: { commit: string }) => {
       const message = answer.commit;
-      const withMain = options.withMain ? 'git merge main' : '';
+      const align = options.align ? 'git merge main' : '';
 
       const childProcess = spawn(`git add . && git commit -m "${message}"`, {
         stdio: [process.stdin, process.stdout, process.stderr],
@@ -43,8 +43,8 @@ const _: TCommands = {
         log.warning(phrases.warning1);
       }
 
-      if (options.withMain) {
-        const mergeProcess = spawn(withMain, {
+      if (options.align) {
+        const mergeProcess = spawn(align, {
           stdio: [process.stdin, process.stdout, process.stderr],
           shell: true
         });
@@ -68,7 +68,7 @@ save
     new Option('-e, --explain', 'to read git commands and explanation')
   )
   .addOption(new Option('-oe, --only-explain', 'to read explanation only'))
-  .addOption(new Option('--with-main', 'merge latest main to branch'))
+  .addOption(new Option('--align', 'merge latest main to branch'))
   .action(async (options) => {
     await _.action(options);
   });

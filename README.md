@@ -37,21 +37,20 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 - [ ] flig # for now is help
 - [x] flig help
 - [x] flig init
-- [x] flig own [--local [--global]] # no global yet
+- [x] flig own [--global]
 - [x] flig start
 - [x] flig moveto [branch name]
-- [x] flig 
-- [x] flig add [single file, *] # only all files
-- [x] flig save [--withMaster]
+- [x] flig add
+- [x] flig save [--align]
 - [x] flig sync
 - [ ] flig pick [--withoutSaving [origin] commit hash]
 - [x] flig forward [number]
 - [x] flig backward [number]
 - [ ] flig revert [--n number [--commit commit hash]]
-- [ ] flig config
 - [x] flig show config
 - [x] flig show logs
 - [x] flig status
+- [ ] flig learn
 
 ## Usage/Examples
 
@@ -63,15 +62,15 @@ flig init owner [--local [--global]] # this happens automatically if the first t
 flig start [branch name] # start new branch
 flig moveto [branch name] # checkout to branch
 flig add [single file, *] # stages changes
-flig save [--withMaster] # commits staged changes and if --withMaster is true, tries to merge latest master after committing
+flig save [--align] # commits staged changes and if --align is true, tries to merge latest master after committing
 flig sync # pulls latest, if conflict tries to resolve, pushes. By default checkout master, pull latest, merge master into branch, pull latest from branch, push.
 flig pick [--withoutSaving [origin] commit hash] # cherry picks specific commit, if --withoutSaving is active does only add without committing (-n)
 flig forward [number] # goes to next commit in the tree/branch, if exists. By default number is 1 unless specified
 flig backward [number] # goes to previous commit in the tree/branch, if exists. By default number is 1 unless specified
 flig revert [--n number [--commit commit hash]] # git reset to HEAD^number or specific commit
-flig config # asks user.name and user.email to add to local .git/config file
 flig show config # full local config
 flig show logs # full logs --oneline (should also show which branches are @ pinpoint)
+flig learn [-l, --lesson] # interactive game for learning git while using it, --lesson goes directly to a specific chapter
 ```
 
 

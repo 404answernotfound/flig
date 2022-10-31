@@ -28,7 +28,7 @@ const _: TCommands = {
     }
 
     const childProcess = spawn(
-      `git log --all --decorate --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | head -1 | xargs -I {} git checkout {}`,
+      `git log --all --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | head -1 | xargs -I {} git checkout {}`,
       {
         stdio: [process.stdin, process.stdout, process.stderr],
         shell: true
