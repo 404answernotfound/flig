@@ -47,7 +47,7 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 - [x] flig forward [number]
 - [x] flig backward [number]
 - [ ] flig revert [--n number [--commit commit hash]]
-- [ ] flig show
+- [x] flig show
 - [x] flig show config
 - [x] flig show pinpoints
 - [x] flig show branches
