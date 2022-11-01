@@ -1,6 +1,8 @@
 import { exec, spawn } from 'child_process';
 import { Command, Option } from 'commander';
+import inquirer from 'inquirer';
 import { exit } from 'process';
+import { showQuestion } from 'src/constants';
 import onExit from 'src/utils/onExit';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
@@ -10,7 +12,8 @@ const phrases = {
   error:
     'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)',
   explanation1: `1) git config -l\nShow local configuration of current repository.`,
-  explanation2: `1) git logs --oneline\nShow logs in oneline fashion for current git repository`
+  explanation2: `1) git log --oneline\nShow logs (pinpoints) in oneline fashion for current git repository`,
+  explanation3: `1) git branch -a\nShow all branches (local or remote) that the repository has`
 };
 
 const config: TCommands = {
@@ -31,9 +34,9 @@ const config: TCommands = {
   }
 };
 
-const logs: TCommands = {
-  title: 'logs',
-  description: 'Shows logs',
+const pinpoints: TCommands = {
+  title: 'pinpoints',
+  description: 'Shows pinpoints',
   action: async (options) => {
     const childProcess = spawn(`git log --oneline`, {
       stdio: [process.stdin, process.stdout, process.stderr],
@@ -48,6 +51,43 @@ const logs: TCommands = {
   }
 };
 
+const branches: TCommands = {
+  title: 'branches',
+  description: 'Shows branches',
+  action: async (options) => {
+    const childProcess = spawn(`git branch -a`, {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      shell: true
+    });
+
+    await onExit(childProcess);
+    if (options.explain) {
+      log.info(phrases.explanation3);
+    }
+    exit(0);
+  }
+};
+
+const _: TCommands = {
+  title: 'branches',
+  description: 'Shows branches',
+  action: async (options) => {
+    inquirer.prompt(showQuestion).then(async (answer: { branch: string }) => {
+      const branchName = answer.branch;
+      const childProcess = spawn(`git branch -a | grep ${branchName}`, {
+        stdio: [process.stdin, process.stdout, process.stderr],
+        shell: true
+      });
+
+      await onExit(childProcess);
+      if (options.explain) {
+        log.info(phrases.explanation3);
+      }
+      exit(0);
+    });
+  }
+};
+
 show
   .command(config.title)
   .addOption(
@@ -58,10 +98,27 @@ show
   });
 
 show
-  .command(logs.title)
+  .command(pinpoints.title)
   .addOption(
     new Option('-e, --explain', 'to read git commands and explanation')
   )
   .action(async (options) => {
-    await logs.action(options);
+    await pinpoints.action(options);
+  });
+
+show
+  .command(branches.title)
+  .addOption(
+    new Option('-e, --explain', 'to read git commands and explanation')
+  )
+  .action(async (options) => {
+    await pinpoints.action(options);
+  });
+
+show
+  .addOption(
+    new Option('-e, --explain', 'to read git commands and explanation')
+  )
+  .action(async (options) => {
+    await _.action(options);
   });

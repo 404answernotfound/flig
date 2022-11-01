@@ -53,3 +53,11 @@ export const syncQuestion = [
         message: 'We are about to sync with origin. What branch would you like to sync? Defaults to `all` if left empty',
     },
 ];
+
+export const showQuestion = [
+    {
+        type: 'input',
+        name: 'branch',
+        message: 'What branch are you looking for? Type the name',
+    },
+];

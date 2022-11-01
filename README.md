@@ -48,7 +48,8 @@ Flig is an opinionated git wrapper and has its own flow, but that doesn't mean y
 - [x] flig backward [number]
 - [ ] flig revert [--n number [--commit commit hash]]
 - [x] flig show config
-- [x] flig show logs
+- [x] flig show pinpoints
+- [ ] flig show branches
 - [x] flig status
 - [ ] flig learn
 
@@ -69,7 +70,8 @@ flig forward [number] # goes to next commit in the tree/branch, if exists. By de
 flig backward [number] # goes to previous commit in the tree/branch, if exists. By default number is 1 unless specified
 flig revert [--n number [--commit commit hash]] # git reset to HEAD^number or specific commit
 flig show config # full local config
-flig show logs # full logs --oneline (should also show which branches are @ pinpoint)
+flig show pinpoints # full logs --oneline (should also show which branches are @ pinpoint)
+flig show branches # git branch -a
 flig learn [-l, --lesson] # interactive game for learning git while using it, --lesson goes directly to a specific chapter
 ```
 

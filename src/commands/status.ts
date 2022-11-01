@@ -1,6 +1,7 @@
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { Command, Option } from 'commander';
 import { exit } from 'process';
+import onExit from 'src/utils/onExit';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
 export const status = new Command('status');
@@ -14,17 +15,18 @@ const phrases = {
 const _: TCommands = {
   title: 'status',
   description: 'Status repository',
-  action: (options) => {
-    exec(`git status`, (err, stdout) => {
-      if (err) {
-        log.error(phrases.error);
-      }
-      log.boring(stdout);
-      if (options.explain) {
-        log.info(phrases.explanation);
-      }
-      exit(0);
+  action: async (options) => {
+    const childProcess = spawn(`git status`, {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      shell: true
     });
+
+    await onExit(childProcess);
+
+    if (options.explain) {
+      log.info(phrases.explanation);
+    }
+    exit(0);
   }
 };
 
