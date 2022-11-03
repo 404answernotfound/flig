@@ -1,17 +1,15 @@
 import { spawn } from 'child_process';
 import { Command, Option } from 'commander';
-import inquirer from 'inquirer';
 import { exit } from 'process';
-import { syncQuestion } from 'src/constants';
 import onExit from 'src/utils/onExit';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
 export const backward = new Command('backward');
 
 const phrases = {
-  error: "This is kinda weird but, I'm not sure what error this is!",
+  error: "This is kinda weird but, this command generated an error. Report this to your local git maintainer :P",
   warning1: `There was either nothing to add or nothing to commit!`,
-  explanation: `1) git reflog | grep $(git rev-parse --short HEAD) | awk '{print $2}' | tail -1 | grep -o '[[:digit:]]*' | xargs -I {} expr {} + 1 | xargs -I {} git checkout HEAD@{{}}\n\nYeah, I cant see your face but I imagine this aint so easy\n\nThe easy explanation just says that we are finding the next commit (pinpoint) in the tree and moving to it. If you want a more complete one,\n\n\ngit reflog # Here we get all the commits we need\ngrep $(git rev-parse --short HEAD) # Here we grep for the short commit hash\nawk '{print $2}' # Here we get just the HEAD@{n}:\ntail -1 # We will get at least 2 results, pick the last line, the first would be 0\ngrep -o '[[:digit:]]*' # Here we grep the HEAD digit\nxargs -I {} expr {} - 1 # Here we go "backward by 1"\nxargs -I {} git checkout HEAD@{{}} # Here we checkout out the branch at HEAD@{n - 1}`
+  explanation: `\n1) git reflog | grep $(git rev-parse --short HEAD) | awk '{print $2}' | tail -1 | grep -o '[[:digit:]]*' | xargs -I {} expr {} + 1 | xargs -I {} git checkout HEAD@{{}}\n\nYeah, I cant see your face but I imagine this aint so easy\n\nThe easy explanation just says that we are finding the next commit (pinpoint) in the tree and moving to it.\nIf you want a more complete one:\n\n\ngit reflog # Here we get all the commits we need\ngrep $(git rev-parse --short HEAD) # Here we grep for the short commit hash\nawk '{print $2}' # Here we get just the HEAD@{n}:\ntail -1 # We will get at least 2 results, pick the last line, the first would be 0\ngrep -o '[[:digit:]]*' # Here we grep the HEAD digit\nxargs -I {} expr {} - 1 # Here we go "backward by 1"\nxargs -I {} git checkout HEAD@{{}} # Here we checkout out the branch at HEAD@{n - 1}`
 };
 
 const _: TCommands = {
