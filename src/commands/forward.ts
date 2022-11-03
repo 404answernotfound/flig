@@ -31,6 +31,8 @@ const _: TCommands = {
       `function _(){
         a=$(git log --all --oneline | awk '{print $1}' | head -1)
         b=$(git log --all --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | tail -1)
+        echo $a
+        echo $b
         if [[ a -eq b ]]
         then
           echo "You are on Main"
