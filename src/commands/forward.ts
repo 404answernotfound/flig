@@ -33,7 +33,7 @@ const _: TCommands = {
         b=$(git log --all --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | tail -1)
         echo $a
         echo $b
-        if [[ a -eq b ]]
+        if [ $a == $b ];
         then
           echo "You are on Main"
           exit
