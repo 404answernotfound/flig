@@ -36,6 +36,7 @@ const _: TCommands = {
         if [ "$a" == "$b" ];
         then
           echo "You are on Main"
+          git config -l | grep -oE -m 1 "main|master" | xargs -I {} bash -c 'git checkout {}'
           exit
         else
           echo "Moving to branch $b"
