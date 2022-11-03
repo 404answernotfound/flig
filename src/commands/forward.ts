@@ -9,9 +9,9 @@ import { log } from '../utils/log';
 export const forward = new Command('forward');
 
 const phrases = {
-  error: "This is kinda weird but, this command generated an error. Report this to your local git maintainer :P",
+  error: "This is kinda weird but, I'm not sure what error this is!",
   warning1: `There was either nothing to add or nothing to commit!`,
-  explanation: `\n1) git reflog | grep $(git rev-parse --short HEAD) | awk '{print $2}' | tail -1 | grep -o '[[:digit:]]*' | xargs -I {} expr {} - 1 | xargs -I {} git checkout HEAD@{{}}\n\nYeah, I cant see your face but I imagine this aint so easy\n\nThe easy explanation just says that we are finding the next commit (pinpoint) in the tree and moving to it.\nIf you want a more complete one:\n\n\ngit reflog # Here we get all the commits we need\ngrep $(git rev-parse --short HEAD) # Here we grep for the short commit hash\nawk '{print $2}' # Here we get just the HEAD@{n}:\ntail -1 # We will get at least 2 results, pick the last line, the first would be 0\ngrep -o '[[:digit:]]*' # Here we grep the HEAD digit\nxargs -I {} expr {} - 1 # Here we go "forward by 1"\nxargs -I {} git checkout HEAD@{{}} # Here we checkout out the branch at HEAD@{n - 1}`
+  explanation: `1) git reflog | grep $(git rev-parse --short HEAD) | awk '{print $2}' | tail -1 | grep -o '[[:digit:]]*' | xargs -I {} expr {} - 1 | xargs -I {} git checkout HEAD@{{}}\n\nYeah, I cant see your face but I imagine this aint so easy\n\nThe easy explanation just says that we are finding the next commit (pinpoint) in the tree and moving to it. If you want a more complete one,\n\n\ngit reflog # Here we get all the commits we need\ngrep $(git rev-parse --short HEAD) # Here we grep for the short commit hash\nawk '{print $2}' # Here we get just the HEAD@{n}:\ntail -1 # We will get at least 2 results, pick the last line, the first would be 0\ngrep -o '[[:digit:]]*' # Here we grep the HEAD digit\nxargs -I {} expr {} - 1 # Here we go "forward by 1"\nxargs -I {} git checkout HEAD@{{}} # Here we checkout out the branch at HEAD@{n - 1}`
 };
 
 const _: TCommands = {
@@ -28,7 +28,16 @@ const _: TCommands = {
     }
 
     const childProcess = spawn(
-      `git log --all --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | head -1 | xargs -I {} git checkout {}`,
+      `function _(){
+        a = git log --all --oneline | awk '{print $1}' | head -1
+        b = git log --all --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | tail -1
+        if a eq b
+          echo "You are on Main"
+          exit
+        else
+          git log --all --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | head -1 | xargs -I {} git checkout {}
+        fi
+      };_`,
       {
         stdio: [process.stdin, process.stdout, process.stderr],
         shell: true
