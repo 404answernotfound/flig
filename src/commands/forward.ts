@@ -38,6 +38,7 @@ const _: TCommands = {
           echo "You are on Main"
           exit
         else
+          echo "Moving to branch $b"
           git log --all --oneline | grep -B 1 $(git rev-parse --short HEAD) | awk '{print $1}' | head -1 | xargs -I {} git checkout {}
         fi
       };_`,
