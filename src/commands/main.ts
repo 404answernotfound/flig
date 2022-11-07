@@ -9,7 +9,7 @@ const phrases = {
   error:
     'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)',
   success: `Congratz! You are now on main branch. This is your new pinpoint (HEAD)`,
-  explanation: `1) git init -q -b main\nThe "init" command in git initialized a repository. Flig uses the flag "-q" to avoid stdout questions on the user and "-b" to create a new branch with the name main.`
+  explanation: `1) git init -q -b main\nThe "init" command in git initializes a repository. Flig uses the flag "-q" to avoid stdout questions on the user and "-b" to create a new branch with the name main.`
 };
 
 const _: TCommands = {

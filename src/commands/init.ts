@@ -17,15 +17,23 @@ const _: TCommands = {
   title: 'init',
   description: 'Initialize repository',
   action: (options) => {
-    exec(`git init -q -b main`, (err, _) => {
+    exec(`stat .git`, (err, _) => {
       if (err) {
-        log.error(phrases.error);
+        exec(`git init -q -b main`, (err, _) => {
+          if (err) {
+            log.error(phrases.error);
+          }
+          log.success(phrases.success);
+          if (options.explain) {
+            log.info(phrases.explanation);
+          }
+        });
+        return;
       }
-      log.success(phrases.success);
-      if (options.explain) {
-        log.info(phrases.explanation);
-      }
-      exit(0);
+      log.error(
+        'This is already a repository! Did you want to reset it? You should delete .git folder but be aware you are going to lose all data for that repository!'
+      );
+      return;
     });
   }
 };
