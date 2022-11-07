@@ -13,7 +13,7 @@ const phrases = {
     'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)',
   warning1: `There was either nothing to add or nothing to commit!`,
   warning2: `Well, nothing to merge from the main branch!`,
-  explanation: `1) git add *\n`
+  explanation: `\n1) git pull origin [branch] && git push origin [branch]\n\n These series of commands let us stay in sync with whats called an origin, which is to say our repository online`
 };
 
 const _: TCommands = {
