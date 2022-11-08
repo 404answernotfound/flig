@@ -1,5 +1,5 @@
 import { exec, spawn } from 'child_process';
-import { Command, Option } from 'commander';
+import { Argument, Command, Option } from 'commander';
 import inquirer from 'inquirer';
 import { exit } from 'process';
 import { showQuestion } from 'src/constants';
@@ -13,10 +13,11 @@ const phrases = {
     'Seems like this is not a git repository at this time. Are you sure you are in the right place? :)',
   wrongBranch:
     'There was something wrong with your last command. Try again with a valid branch name!',
+  warning: 'The command you tried to use with show does not exist',
   explanation1: `\n1) git config -l\n\nShow local configuration of current repository.`,
   explanation2: `\n2) git log --oneline\n\nShow logs (pinpoints) in oneline fashion for current git repository`,
   explanation3: `\n3) git branch -a\n\nShow all branches (local or remote) that the repository has`,
-  explanation4: `\n4) git branch -a | grep [branch regex]\n\nSearch all branches (local or remote) that the repository has`,
+  explanation4: `\n4) git branch -a | grep [branch regex]\n\nSearch all branches (local or remote) that the repository has`
 };
 
 const config: TCommands = {
@@ -75,6 +76,10 @@ const _: TCommands = {
   title: 'branches',
   description: 'search branches',
   action: async (options) => {
+    if (process.argv[3]) {
+      log.warning(phrases.warning);
+      return;
+    }
     inquirer.prompt(showQuestion).then(async (answer: { branch: string }) => {
       const branchName = answer.branch;
       try {

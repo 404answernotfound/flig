@@ -11,7 +11,7 @@ import { save } from './save';
 import { sync } from './sync';
 import { forward } from './forward';
 import { backward } from './backward';
-export const flig = new Command();
+const flig = new Command();
 
 flig
   .name('flig')
@@ -32,3 +32,5 @@ flig.addCommand(save);
 flig.addCommand(sync);
 flig.addCommand(forward);
 flig.addCommand(backward);
+
+export default flig;

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-import { flig } from './commands';
-import { log } from './utils/log'
+import flig from './commands';
 
 async function main() {
   await flig.parseAsync();

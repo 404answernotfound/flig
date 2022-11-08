@@ -2,3 +2,4 @@ node_modules
 file*.*
 notes.md
 dist
+coverage
