@@ -11,6 +11,7 @@ import { save } from './save';
 import { sync } from './sync';
 import { forward } from './forward';
 import { backward } from './backward';
+import { storytime } from './storytime';
 const flig = new Command();
 
 flig
@@ -32,5 +33,6 @@ flig.addCommand(save);
 flig.addCommand(sync);
 flig.addCommand(forward);
 flig.addCommand(backward);
+flig.addCommand(storytime);
 
 export default flig;
