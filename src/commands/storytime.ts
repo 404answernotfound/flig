@@ -3,7 +3,7 @@ import { Command, Option } from 'commander';
 import { exit } from 'process';
 import onExit from 'src/utils/onExit';
 import inquirer from 'inquirer';
-import { storytimeStart } from 'src/constants';
+import { storytimeAnswers, storytimeStart } from 'src/constants';
 import { TCommands } from '../types';
 import { log } from '../utils/log';
 export const storytime = new Command('storytime');
@@ -17,16 +17,18 @@ const phrases = {
 function learnCommand(command: string): void {
   switch (command) {
     case 'init':
-      log.info(
-        '\nflig init\n\nThe "init" command from flig makes use of git init command to create a repository.\nFlig uses the flags:\n\n"-q" to avoid stdout questions on the user\n"-b" to create a new branch with the name main.\n\nThis is because depending on your git installation you might be creating new repositories with a "main" branch called "master", which we should avoid :)'
-      );
+      log.info(storytimeAnswers.init);
       break;
     case 'add':
-      log.info('coming soon');
+      log.info(storytimeAnswers.add);
       break;
     case 'own':
-      log.info('coming soon');
+      log.info(storytimeAnswers.own);
       break;
+    case 'main':
+      log.info(storytimeAnswers.main);
+    case 'moveto':
+      log.info(storytimeAnswers.moveto);
     default:
       break;
   }
